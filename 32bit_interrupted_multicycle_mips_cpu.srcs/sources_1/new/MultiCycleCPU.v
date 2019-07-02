@@ -4,10 +4,14 @@
 // ~~~~~~~~~~~~~~~~~~~~~~ CPU ~~~~~~~~~~~~~~~~~~~~~~~ //
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
 
-module MultiCycleCPU(clk, reset);
+module MultiCycleCPU(clk, reset,AluRes);
   // ~~~~~~~~~~~~~~~~~~~~~ INPUTS ~~~~~~~~~~~~~~~~~~~~~~ //
 
   input clk, reset;
+  
+  // ~~~~~~~~~~~~~~~~~~~~~ OUTPUTS ~~~~~~~~~~~~~~~~~~~~~~ //
+  
+  output wire AluRes;
 
   // ~~~~~~~~~~~~~~~~~~~~~ WIRES ~~~~~~~~~~~~~~~~~~~~~~~ //
 
@@ -22,7 +26,7 @@ module MultiCycleCPU(clk, reset);
 
   datapath	cpu_datapath(clk, reset, PCWrite, PCWriteCond, IRWrite, DMEMWrite,
                          RegWrite, ALUSrcA, RegReadSel, MemtoReg, ALUSrcB,
-                         PCSource, ALUSel, opcode);
+                         PCSource, ALUSel, opcode, AluRes);
 
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
   // ~~~~~~~~~~~~~~~~~~~ CONTROLLER ~~~~~~~~~~~~~~~~~~~ //
