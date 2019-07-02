@@ -6,7 +6,7 @@
 
 module datapath(clk, reset, PCWrite, PCWriteCond, IRWrite, DMEMWrite, RegWrite,
                  ALUSrcA, RegReadSel, MemtoReg, ALUSrcB, PCSource, ALUSel,
-                 opcode);
+                 opcode,ALUResTemp);
 
   // ~~~~~~~~~~~~~~~~~~~ PORTS ~~~~~~~~~~~~~~~~~~~ //
 
@@ -15,6 +15,7 @@ module datapath(clk, reset, PCWrite, PCWriteCond, IRWrite, DMEMWrite, RegWrite,
   input [3:0] ALUSel;
   input clk, reset;
   output [5:0] opcode;
+  output wire ALUResTemp;
 
   // ~~~~~~~~~~~~~~~~~~~ PARAMETERS ~~~~~~~~~~~~~~~~~~~ //
 
@@ -134,4 +135,6 @@ module datapath(clk, reset, PCWrite, PCWriteCond, IRWrite, DMEMWrite, RegWrite,
 
   // ALU
   myALU	mainALU(ALU_wire, zero, sourceA, sourceB, ALUSel);
+  assign ALUResTemp=ALU_wire;
+  
 endmodule
