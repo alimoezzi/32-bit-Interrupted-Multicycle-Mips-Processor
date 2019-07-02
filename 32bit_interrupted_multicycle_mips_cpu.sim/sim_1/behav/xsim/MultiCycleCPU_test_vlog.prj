@@ -1,0 +1,23 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  \
+"../../../../32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/DMem.v" \
+"../../../../32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/IMem.v" \
+"../../../../32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/MultiCycleCPU.v" \
+"../../../../32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/controller.v" \
+"../../../../32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/datapath.v" \
+"../../../../32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/holding_reg.v" \
+"../../../../32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/jumpALU.v" \
+"../../../../32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/mux_1bit.v" \
+"../../../../32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/mux_2bit.v" \
+"../../../../32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/myALU.v" \
+"../../../../32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/nbit_register_file.v" \
+"../../../../32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/read_mux.v" \
+"../../../../32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/sign_extend.v" \
+"../../../../32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/zero_extend.v" \
+"../../../../32bit_interrupted_multicycle_mips_cpu.srcs/sim_1/new/MultiCycleCPU_test.v" \
+
+# compile glbl module
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort
