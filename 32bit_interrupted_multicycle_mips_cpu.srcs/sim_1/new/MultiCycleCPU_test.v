@@ -29,11 +29,14 @@ module MultiCycleCPU_test;
 	// Inputs
 	reg clk;
 	reg reset;
+	// Outputs
+	wire [31:0] ALUImmResult;
 
 	// Instantiate the Unit Under Test (UUT)
 	MultiCycleCPU uut (
 		.clk(clk),
-		.reset(reset)
+		.reset(reset),
+		.AluRes(ALUImmResult)
 	);
 	always
 	#5 clk = ~clk;
