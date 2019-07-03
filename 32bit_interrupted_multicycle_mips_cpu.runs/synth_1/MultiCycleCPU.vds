@@ -1,0 +1,630 @@
+#-----------------------------------------------------------
+# Vivado v2018.2 (64-bit)
+# SW Build 2258646 on Thu Jun 14 20:03:12 MDT 2018
+# IP Build 2256618 on Thu Jun 14 22:10:49 MDT 2018
+# Start of session at: Wed Jul  3 14:58:49 2019
+# Process ID: 15536
+# Current directory: C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.runs/synth_1
+# Command line: vivado.exe -log MultiCycleCPU.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source MultiCycleCPU.tcl
+# Log file: C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.runs/synth_1/MultiCycleCPU.vds
+# Journal file: C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.runs/synth_1\vivado.jou
+#-----------------------------------------------------------
+source MultiCycleCPU.tcl -notrace
+Command: synth_design -top MultiCycleCPU -part xcku3p-ffva676-2L-e
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xcku3p'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xcku3p'
+INFO: Launching helper process for spawning children vivado processes
+INFO: Helper process launched with PID 14856 
+---------------------------------------------------------------------------------
+Starting Synthesize : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 333.598 ; gain = 100.320
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6157] synthesizing module 'MultiCycleCPU' [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/MultiCycleCPU.v:8]
+	Parameter word_size bound to: 32 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'datapath' [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/datapath.v:7]
+	Parameter word_size bound to: 32 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'IMem' [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/IMem.v:26]
+	Parameter PROG_LENGTH bound to: 22 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'IMem' (1#1) [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/IMem.v:26]
+INFO: [Synth 8-6157] synthesizing module 'DMem' [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/DMem.v:19]
+	Parameter ADDRESS_WIDTH bound to: 16 - type: integer 
+	Parameter DATA_WIDTH bound to: 32 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'DMem' (2#1) [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/DMem.v:19]
+INFO: [Synth 8-6157] synthesizing module 'holding_reg' [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/holding_reg.v:4]
+	Parameter word_size bound to: 32 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'holding_reg' (3#1) [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/holding_reg.v:4]
+INFO: [Synth 8-6157] synthesizing module 'nbit_register_file' [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/nbit_register_file.v:6]
+	Parameter data_width bound to: 32 - type: integer 
+	Parameter select_width bound to: 5 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'nbit_register_file' (4#1) [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/nbit_register_file.v:6]
+WARNING: [Synth 8-689] width (1) of port connection 'output_data' does not match port width (32) of module 'holding_reg' [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/datapath.v:118]
+WARNING: [Synth 8-689] width (1) of port connection 'input_data' does not match port width (32) of module 'holding_reg' [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/datapath.v:118]
+WARNING: [Synth 8-689] width (2) of port connection 'output_data' does not match port width (32) of module 'holding_reg' [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/datapath.v:122]
+WARNING: [Synth 8-689] width (2) of port connection 'input_data' does not match port width (32) of module 'holding_reg' [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/datapath.v:122]
+WARNING: [Synth 8-689] width (2) of port connection 'write' does not match port width (1) of module 'holding_reg' [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/datapath.v:122]
+WARNING: [Synth 8-689] width (2) of port connection 'output_data' does not match port width (32) of module 'holding_reg' [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/datapath.v:126]
+WARNING: [Synth 8-689] width (2) of port connection 'input_data' does not match port width (32) of module 'holding_reg' [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/datapath.v:126]
+WARNING: [Synth 8-689] width (2) of port connection 'write' does not match port width (1) of module 'holding_reg' [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/datapath.v:126]
+INFO: [Synth 8-6157] synthesizing module 'zero_extend' [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/zero_extend.v:4]
+	Parameter word_size bound to: 32 - type: integer 
+	Parameter imm_size bound to: 16 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'zero_extend' (5#1) [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/zero_extend.v:4]
+INFO: [Synth 8-6157] synthesizing module 'sign_extend' [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/sign_extend.v:4]
+	Parameter word_size bound to: 32 - type: integer 
+	Parameter imm_size bound to: 16 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'sign_extend' (6#1) [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/sign_extend.v:4]
+INFO: [Synth 8-6157] synthesizing module 'read_mux' [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/read_mux.v:4]
+	Parameter word_size bound to: 5 - type: integer 
+INFO: [Synth 8-226] default block is never used [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/read_mux.v:16]
+INFO: [Synth 8-6155] done synthesizing module 'read_mux' (7#1) [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/read_mux.v:4]
+INFO: [Synth 8-6157] synthesizing module 'mux_2bit' [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/mux_2bit.v:4]
+	Parameter word_size bound to: 32 - type: integer 
+INFO: [Synth 8-226] default block is never used [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/mux_2bit.v:16]
+INFO: [Synth 8-6155] done synthesizing module 'mux_2bit' (8#1) [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/mux_2bit.v:4]
+INFO: [Synth 8-6157] synthesizing module 'mux_1bit' [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/mux_1bit.v:4]
+	Parameter word_size bound to: 32 - type: integer 
+INFO: [Synth 8-226] default block is never used [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/mux_1bit.v:16]
+INFO: [Synth 8-6155] done synthesizing module 'mux_1bit' (9#1) [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/mux_1bit.v:4]
+INFO: [Synth 8-6157] synthesizing module 'jumpALU' [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/jumpALU.v:4]
+	Parameter word_size bound to: 32 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'jumpALU' (10#1) [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/jumpALU.v:4]
+INFO: [Synth 8-6157] synthesizing module 'myALU' [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/myALU.v:4]
+	Parameter word_size bound to: 32 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'myALU' (11#1) [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/myALU.v:4]
+INFO: [Synth 8-6155] done synthesizing module 'datapath' (12#1) [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/datapath.v:7]
+WARNING: [Synth 8-689] width (1) of port connection 'causeExceptionout' does not match port width (2) of module 'datapath' [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/MultiCycleCPU.v:49]
+WARNING: [Synth 8-689] width (1) of port connection 'causeExceptionin' does not match port width (2) of module 'datapath' [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/MultiCycleCPU.v:50]
+WARNING: [Synth 8-689] width (1) of port connection 'causeInterruptout' does not match port width (2) of module 'datapath' [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/MultiCycleCPU.v:52]
+WARNING: [Synth 8-689] width (1) of port connection 'causeInterruptin' does not match port width (2) of module 'datapath' [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/MultiCycleCPU.v:53]
+INFO: [Synth 8-6157] synthesizing module 'controller' [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/controller.v:7]
+	Parameter s0 bound to: 4'b0000 
+	Parameter s1 bound to: 4'b0001 
+	Parameter s2 bound to: 4'b0010 
+	Parameter s3 bound to: 4'b0011 
+	Parameter s4 bound to: 4'b0100 
+	Parameter s5 bound to: 4'b0101 
+	Parameter s6 bound to: 4'b0110 
+	Parameter s7 bound to: 4'b0111 
+	Parameter s8 bound to: 4'b1000 
+	Parameter s9 bound to: 4'b1001 
+	Parameter s10 bound to: 4'b1010 
+	Parameter s11 bound to: 4'b1011 
+	Parameter s12 bound to: 4'b1100 
+	Parameter sR bound to: 4'b1101 
+	Parameter s14 bound to: 4'b1110 
+	Parameter J bound to: 2'b00 
+	Parameter R bound to: 2'b01 
+	Parameter BR bound to: 2'b10 
+	Parameter I bound to: 2'b11 
+	Parameter ADDI bound to: 4'b0010 
+	Parameter SUBI bound to: 4'b0011 
+	Parameter ORI bound to: 4'b0100 
+	Parameter ANDI bound to: 4'b0101 
+	Parameter XORI bound to: 4'b0110 
+	Parameter SLTI bound to: 4'b0111 
+	Parameter LI bound to: 4'b1001 
+	Parameter LUI bound to: 4'b1010 
+	Parameter LWI bound to: 4'b1011 
+	Parameter SWI bound to: 4'b1100 
+WARNING: [Synth 8-3848] Net INA in module/entity controller does not have driver. [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/controller.v:24]
+WARNING: [Synth 8-3848] Net datapathCauseInterruptout in module/entity controller does not have driver. [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/controller.v:25]
+WARNING: [Synth 8-3848] Net datapathEPCout in module/entity controller does not have driver. [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/controller.v:26]
+WARNING: [Synth 8-3848] Net datapathEPCin in module/entity controller does not have driver. [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/controller.v:27]
+WARNING: [Synth 8-3848] Net datapathCauseInterruptin in module/entity controller does not have driver. [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/controller.v:28]
+WARNING: [Synth 8-3848] Net datapathCauseInterruptWrite in module/entity controller does not have driver. [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/controller.v:29]
+INFO: [Synth 8-6155] done synthesizing module 'controller' (13#1) [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/controller.v:7]
+WARNING: [Synth 8-3848] Net datapathCauseExceptionin in module/entity MultiCycleCPU does not have driver. [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/MultiCycleCPU.v:21]
+INFO: [Synth 8-6155] done synthesizing module 'MultiCycleCPU' (14#1) [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/MultiCycleCPU.v:8]
+WARNING: [Synth 8-3331] design controller has unconnected port INA
+WARNING: [Synth 8-3331] design controller has unconnected port datapathCauseInterruptout
+WARNING: [Synth 8-3331] design controller has unconnected port datapathEPCout
+WARNING: [Synth 8-3331] design controller has unconnected port datapathEPCin
+WARNING: [Synth 8-3331] design controller has unconnected port datapathCauseInterruptin
+WARNING: [Synth 8-3331] design controller has unconnected port datapathCauseInterruptWrite
+WARNING: [Synth 8-3331] design controller has unconnected port NMI
+WARNING: [Synth 8-3331] design controller has unconnected port INT
+WARNING: [Synth 8-3331] design DMem has unconnected port Address[15]
+WARNING: [Synth 8-3331] design DMem has unconnected port Address[14]
+WARNING: [Synth 8-3331] design DMem has unconnected port Address[13]
+WARNING: [Synth 8-3331] design DMem has unconnected port Address[12]
+WARNING: [Synth 8-3331] design DMem has unconnected port Address[11]
+WARNING: [Synth 8-3331] design DMem has unconnected port Address[10]
+WARNING: [Synth 8-3331] design DMem has unconnected port Address[9]
+WARNING: [Synth 8-3331] design DMem has unconnected port Address[8]
+WARNING: [Synth 8-3331] design DMem has unconnected port Address[7]
+WARNING: [Synth 8-3331] design DMem has unconnected port Address[6]
+WARNING: [Synth 8-3331] design DMem has unconnected port Address[5]
+WARNING: [Synth 8-3331] design DMem has unconnected port Address[4]
+WARNING: [Synth 8-3331] design datapath has unconnected port causeExceptionWrite[1]
+WARNING: [Synth 8-3331] design datapath has unconnected port causeInterruptWrite[1]
+---------------------------------------------------------------------------------
+Finished Synthesize : Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 388.039 ; gain = 154.762
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 388.039 ; gain = 154.762
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xcku3p-ffva676-2L-e
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 388.039 ; gain = 154.762
+---------------------------------------------------------------------------------
+INFO: [Device 21-403] Loading part xcku3p-ffva676-2L-e
+INFO: [Synth 8-5545] ROM "Instruction" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "zero" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'controller'
+INFO: [Synth 8-5544] ROM "PCWrite" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "PCWriteCond" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "MemtoReg" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "MemtoReg" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "PCSource" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "state" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "state" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+WARNING: [Synth 8-327] inferring latch for variable 'zero_reg' [C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/myALU.v:25]
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                      sR |                             0000 |                             1101
+                      s0 |                             0001 |                             0000
+                      s1 |                             0010 |                             0001
+                      s2 |                             0011 |                             0010
+                     s12 |                             0100 |                             1100
+                     s14 |                             0101 |                             1110
+                      s9 |                             0110 |                             1001
+                     s10 |                             0111 |                             1010
+                      s8 |                             1000 |                             1000
+                     s11 |                             1001 |                             1011
+                      s3 |                             1010 |                             0011
+                      s4 |                             1011 |                             0100
+                      s6 |                             1100 |                             0110
+                      s5 |                             1101 |                             0101
+                      s7 |                             1110 |                             0111
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'sequential' in module 'controller'
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 388.039 ; gain = 154.762
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+No constraint files found.
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input     32 Bit       Adders := 2     
+	   3 Input     32 Bit       Adders := 1     
++---XORs : 
+	   2 Input     32 Bit         XORs := 1     
++---Registers : 
+	               32 Bit    Registers := 9     
+	                4 Bit    Registers := 1     
+	                2 Bit    Registers := 3     
+	                1 Bit    Registers := 7     
++---Muxes : 
+	   2 Input     32 Bit        Muxes := 3     
+	   4 Input     32 Bit        Muxes := 3     
+	   2 Input      5 Bit        Muxes := 1     
+	   4 Input      4 Bit        Muxes := 1     
+	   2 Input      4 Bit        Muxes := 2     
+	  15 Input      4 Bit        Muxes := 1     
+	  26 Input      4 Bit        Muxes := 1     
+	   2 Input      2 Bit        Muxes := 2     
+	   6 Input      2 Bit        Muxes := 1     
+	  15 Input      2 Bit        Muxes := 3     
+	   2 Input      1 Bit        Muxes := 27    
+	   8 Input      1 Bit        Muxes := 1     
+	   4 Input      1 Bit        Muxes := 12    
+	  15 Input      1 Bit        Muxes := 15    
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Hierarchical Component Statistics 
+---------------------------------------------------------------------------------
+Hierarchical RTL Component report 
+Module IMem 
+Detailed RTL Component Info : 
++---Muxes : 
+	   2 Input     32 Bit        Muxes := 1     
+Module holding_reg 
+Detailed RTL Component Info : 
++---Registers : 
+	               32 Bit    Registers := 1     
+Module read_mux 
+Detailed RTL Component Info : 
++---Muxes : 
+	   2 Input      5 Bit        Muxes := 1     
+Module mux_2bit 
+Detailed RTL Component Info : 
++---Muxes : 
+	   4 Input     32 Bit        Muxes := 1     
+Module mux_1bit 
+Detailed RTL Component Info : 
++---Muxes : 
+	   2 Input     32 Bit        Muxes := 1     
+Module jumpALU 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input     32 Bit       Adders := 1     
+Module myALU 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input     32 Bit       Adders := 1     
+	   3 Input     32 Bit       Adders := 1     
++---XORs : 
+	   2 Input     32 Bit         XORs := 1     
++---Muxes : 
+	   2 Input     32 Bit        Muxes := 1     
+	   2 Input      1 Bit        Muxes := 2     
+	   8 Input      1 Bit        Muxes := 1     
+Module controller 
+Detailed RTL Component Info : 
++---Registers : 
+	                4 Bit    Registers := 1     
+	                2 Bit    Registers := 3     
+	                1 Bit    Registers := 7     
++---Muxes : 
+	   4 Input      4 Bit        Muxes := 1     
+	   2 Input      4 Bit        Muxes := 2     
+	  15 Input      4 Bit        Muxes := 1     
+	  26 Input      4 Bit        Muxes := 1     
+	   2 Input      2 Bit        Muxes := 2     
+	   6 Input      2 Bit        Muxes := 1     
+	  15 Input      2 Bit        Muxes := 3     
+	   4 Input      1 Bit        Muxes := 12    
+	   2 Input      1 Bit        Muxes := 25    
+	  15 Input      1 Bit        Muxes := 15    
+---------------------------------------------------------------------------------
+Finished RTL Hierarchical Component Statistics
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 1368 (col length:96)
+BRAMs: 720 (col length: RAMB18 96 RAMB36 48)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+No constraint files found.
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+Warning: Parallel synthesis criteria is not met 
+INFO: [Synth 8-5545] ROM "mainALU/zero" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+WARNING: [Synth 8-3331] design controller has unconnected port INA
+WARNING: [Synth 8-3331] design controller has unconnected port datapathCauseInterruptout
+WARNING: [Synth 8-3331] design controller has unconnected port datapathEPCout
+WARNING: [Synth 8-3331] design controller has unconnected port datapathEPCin
+WARNING: [Synth 8-3331] design controller has unconnected port datapathCauseInterruptin
+WARNING: [Synth 8-3331] design controller has unconnected port datapathCauseInterruptWrite
+WARNING: [Synth 8-3331] design controller has unconnected port NMI
+WARNING: [Synth 8-3331] design controller has unconnected port INT
+WARNING: [Synth 8-3331] design datapath has unconnected port causeExceptionWrite[1]
+WARNING: [Synth 8-3331] design datapath has unconnected port causeInterruptWrite[1]
+WARNING: [Synth 8-3331] design MultiCycleCPU has unconnected port cntrlINA
+INFO: [Synth 8-3886] merging instance 'cpu_datapath/IR/content_reg[16]' (FDRE) to 'i_6'
+INFO: [Synth 8-3886] merging instance 'cpu_datapath/IR/content_reg[17]' (FDRE) to 'i_4'
+INFO: [Synth 8-3886] merging instance 'cpu_datapath/IR/content_reg[18]' (FDRE) to 'i_3'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (i_3)
+INFO: [Synth 8-3886] merging instance 'cpu_datapath/IR/content_reg[19]' (FDRE) to 'i_2'
+INFO: [Synth 8-3886] merging instance 'cpu_datapath/IR/content_reg[20]' (FDRE) to 'i_2'
+INFO: [Synth 8-3886] merging instance 'i_2' (FDRE) to 'i_1'
+INFO: [Synth 8-3886] merging instance 'cpu_datapath/IR/content_reg[3]' (FDRE) to 'cpu_datapath/IR/content_reg[4]'
+INFO: [Synth 8-3886] merging instance 'cpu_datapath/IR/content_reg[4]' (FDRE) to 'cpu_datapath/IR/content_reg[5]'
+INFO: [Synth 8-3886] merging instance 'cpu_datapath/IR/content_reg[5]' (FDRE) to 'cpu_datapath/IR/content_reg[6]'
+INFO: [Synth 8-3886] merging instance 'cpu_datapath/IR/content_reg[6]' (FDRE) to 'cpu_datapath/IR/content_reg[7]'
+INFO: [Synth 8-3886] merging instance 'cpu_datapath/IR/content_reg[7]' (FDRE) to 'cpu_datapath/IR/content_reg[8]'
+INFO: [Synth 8-3886] merging instance 'cpu_datapath/IR/content_reg[8]' (FDRE) to 'cpu_datapath/IR/content_reg[9]'
+INFO: [Synth 8-3886] merging instance 'cpu_datapath/IR/content_reg[9]' (FDRE) to 'cpu_datapath/IR/content_reg[10]'
+INFO: [Synth 8-3886] merging instance 'cpu_datapath/IR/content_reg[10]' (FDRE) to 'cpu_datapath/IR/content_reg[13]'
+INFO: [Synth 8-3886] merging instance 'cpu_datapath/IR/content_reg[13]' (FDRE) to 'cpu_datapath/IR/content_reg[14]'
+INFO: [Synth 8-3886] merging instance 'cpu_datapath/IR/content_reg[14]' (FDRE) to 'cpu_datapath/IR/content_reg[15]'
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/EPC/content_reg[31]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/EPC/content_reg[30]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/EPC/content_reg[29]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/EPC/content_reg[28]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/EPC/content_reg[27]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/EPC/content_reg[26]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/EPC/content_reg[25]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/EPC/content_reg[24]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/EPC/content_reg[23]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/EPC/content_reg[22]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/EPC/content_reg[21]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/EPC/content_reg[20]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/EPC/content_reg[19]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/EPC/content_reg[18]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/EPC/content_reg[17]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/EPC/content_reg[16]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/EPC/content_reg[15]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/EPC/content_reg[14]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/EPC/content_reg[13]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/EPC/content_reg[12]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/EPC/content_reg[11]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/EPC/content_reg[10]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/EPC/content_reg[9]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/EPC/content_reg[8]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/EPC/content_reg[7]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/EPC/content_reg[6]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/EPC/content_reg[5]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/EPC/content_reg[4]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/EPC/content_reg[3]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/EPC/content_reg[2]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/EPC/content_reg[1]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeException/content_reg[31]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeException/content_reg[30]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeException/content_reg[29]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeException/content_reg[28]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeException/content_reg[27]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeException/content_reg[26]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeException/content_reg[25]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeException/content_reg[24]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeException/content_reg[23]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeException/content_reg[22]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeException/content_reg[21]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeException/content_reg[20]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeException/content_reg[19]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeException/content_reg[18]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeException/content_reg[17]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeException/content_reg[16]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeException/content_reg[15]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeException/content_reg[14]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeException/content_reg[13]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeException/content_reg[12]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeException/content_reg[11]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeException/content_reg[10]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeException/content_reg[9]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeException/content_reg[8]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeException/content_reg[7]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeException/content_reg[6]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeException/content_reg[5]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeException/content_reg[4]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeException/content_reg[3]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeException/content_reg[2]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeException/content_reg[1]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeInterrupt/content_reg[31]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeInterrupt/content_reg[30]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeInterrupt/content_reg[29]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeInterrupt/content_reg[28]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeInterrupt/content_reg[27]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeInterrupt/content_reg[26]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeInterrupt/content_reg[25]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeInterrupt/content_reg[24]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeInterrupt/content_reg[23]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeInterrupt/content_reg[22]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeInterrupt/content_reg[21]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeInterrupt/content_reg[20]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeInterrupt/content_reg[19]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeInterrupt/content_reg[18]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeInterrupt/content_reg[17]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeInterrupt/content_reg[16]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeInterrupt/content_reg[15]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeInterrupt/content_reg[14]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeInterrupt/content_reg[13]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeInterrupt/content_reg[12]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeInterrupt/content_reg[11]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeInterrupt/content_reg[10]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeInterrupt/content_reg[9]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeInterrupt/content_reg[8]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeInterrupt/content_reg[7]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeInterrupt/content_reg[6]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeInterrupt/content_reg[5]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeInterrupt/content_reg[4]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeInterrupt/content_reg[3]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeInterrupt/content_reg[2]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeInterrupt/content_reg[1]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (i_3) is unused and will be removed from module MultiCycleCPU.
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:17 ; elapsed = 00:00:19 . Memory (MB): peak = 1358.055 ; gain = 1124.777
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP and Shift Register Reporting
+---------------------------------------------------------------------------------
+
+Distributed RAM: Preliminary Mapping  Report (see note below)
++--------------+-----------------------------------+-----------+----------------------+-----------------+
+|Module Name   | RTL Object                        | Inference | Size (Depth x Width) | Primitives      | 
++--------------+-----------------------------------+-----------+----------------------+-----------------+
+|MultiCycleCPU | cpu_datapath/DM/mem_contents_reg  | Implied   | 16 x 32              | RAM16X1S x 32   | 
+|MultiCycleCPU | cpu_datapath/RF/register_file_reg | Implied   | 32 x 32              | RAM32M16 x 6    | 
++--------------+-----------------------------------+-----------+----------------------+-----------------+
+
+Note: The table above is a preliminary report that shows the Distributed RAMs at the current stage of the synthesis flow. Some Distributed RAMs may be reimplemented as non Distributed RAM primitives later in the synthesis flow. Multiple instantiated RAMs are reported only once.
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP and Shift Register Reporting
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+No constraint files found.
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:17 ; elapsed = 00:00:19 . Memory (MB): peak = 1358.055 ; gain = 1124.777
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP and Shift Register Reporting
+---------------------------------------------------------------------------------
+
+Distributed RAM: Final Mapping  Report
++--------------+-----------------------------------+-----------+----------------------+-----------------+
+|Module Name   | RTL Object                        | Inference | Size (Depth x Width) | Primitives      | 
++--------------+-----------------------------------+-----------+----------------------+-----------------+
+|MultiCycleCPU | cpu_datapath/DM/mem_contents_reg  | Implied   | 16 x 32              | RAM16X1S x 32   | 
+|MultiCycleCPU | cpu_datapath/RF/register_file_reg | Implied   | 32 x 32              | RAM32M16 x 6    | 
++--------------+-----------------------------------+-----------+----------------------+-----------------+
+
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP and Shift Register Reporting
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/EPC/content_reg[0]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeException/content_reg[0]) is unused and will be removed from module MultiCycleCPU.
+WARNING: [Synth 8-3332] Sequential element (cpu_datapath/causeInterrupt/content_reg[0]) is unused and will be removed from module MultiCycleCPU.
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:17 ; elapsed = 00:00:19 . Memory (MB): peak = 1358.055 ; gain = 1124.777
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:19 ; elapsed = 00:00:21 . Memory (MB): peak = 1358.055 ; gain = 1124.777
+---------------------------------------------------------------------------------
+
+Report Check Netlist: 
++------+------------------+-------+---------+-------+------------------+
+|      |Item              |Errors |Warnings |Status |Description       |
++------+------------------+-------+---------+-------+------------------+
+|1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
++------+------------------+-------+---------+-------+------------------+
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:19 ; elapsed = 00:00:21 . Memory (MB): peak = 1358.055 ; gain = 1124.777
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:19 ; elapsed = 00:00:21 . Memory (MB): peak = 1358.055 ; gain = 1124.777
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:19 ; elapsed = 00:00:21 . Memory (MB): peak = 1358.055 ; gain = 1124.777
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:19 ; elapsed = 00:00:21 . Memory (MB): peak = 1358.055 ; gain = 1124.777
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:19 ; elapsed = 00:00:21 . Memory (MB): peak = 1358.055 ; gain = 1124.777
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+---------+------+
+|      |Cell     |Count |
++------+---------+------+
+|1     |BUFG     |     1|
+|2     |CARRY8   |    14|
+|3     |LUT1     |     1|
+|4     |LUT2     |    33|
+|5     |LUT3     |    41|
+|6     |LUT4     |    77|
+|7     |LUT5     |   163|
+|8     |LUT6     |   144|
+|9     |MUXF7    |     1|
+|10    |RAM16X1S |    32|
+|11    |RAM32M16 |     6|
+|12    |FDRE     |   198|
+|13    |FDSE     |     3|
+|14    |LD       |     1|
+|15    |IBUF     |     2|
+|16    |OBUF     |    35|
+|17    |OBUFT    |     1|
++------+---------+------+
+
+Report Instance Areas: 
++------+-----------------+-------------------+------+
+|      |Instance         |Module             |Cells |
++------+-----------------+-------------------+------+
+|1     |top              |                   |   753|
+|2     |  cpu_controller |controller         |   168|
+|3     |  cpu_datapath   |datapath           |   543|
+|4     |    DM           |DMem               |    32|
+|5     |    A            |holding_reg        |   162|
+|6     |    ALUOut       |holding_reg_0      |    32|
+|7     |    B            |holding_reg_1      |    32|
+|8     |    IR           |holding_reg_2      |    70|
+|9     |    MDR          |holding_reg_3      |    64|
+|10    |    PC           |holding_reg_4      |    89|
+|11    |    RF           |nbit_register_file |     6|
+|12    |    jALU         |jumpALU            |     4|
+|13    |    mainALU      |myALU              |    51|
++------+-----------------+-------------------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:19 ; elapsed = 00:00:21 . Memory (MB): peak = 1358.055 ; gain = 1124.777
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 150 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:19 ; elapsed = 00:00:21 . Memory (MB): peak = 1358.055 ; gain = 1124.777
+Synthesis Optimization Complete : Time (s): cpu = 00:00:19 ; elapsed = 00:00:21 . Memory (MB): peak = 1358.055 ; gain = 1124.777
+INFO: [Project 1-571] Translating synthesized netlist
+INFO: [Netlist 29-17] Analyzing 57 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 42 instances were transformed.
+  BUFG => BUFGCE: 1 instances
+  IBUF => IBUF (IBUFCTRL, INBUF): 2 instances
+  LD => LDCE: 1 instances
+  RAM16X1S => RAM32X1S (RAMS32): 32 instances
+  RAM32M16 => RAM32M16 (RAMD32, RAMD32, RAMD32, RAMD32, RAMD32, RAMD32, RAMD32, RAMD32, RAMD32, RAMD32, RAMD32, RAMD32, RAMD32, RAMD32, RAMS32, RAMS32): 6 instances
+
+INFO: [Common 17-83] Releasing license: Synthesis
+69 Infos, 150 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:00:28 ; elapsed = 00:00:33 . Memory (MB): peak = 1358.055 ; gain = 1137.781
+WARNING: [Constraints 18-5210] No constraint will be written out.
+INFO: [Common 17-1381] The checkpoint 'C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.runs/synth_1/MultiCycleCPU.dcp' has been generated.
+INFO: [runtcl-4] Executing : report_utilization -file MultiCycleCPU_utilization_synth.rpt -pb MultiCycleCPU_utilization_synth.pb
+report_utilization: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.183 . Memory (MB): peak = 1358.055 ; gain = 0.000
+INFO: [Common 17-206] Exiting Vivado at Wed Jul  3 14:59:29 2019...

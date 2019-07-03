@@ -12,6 +12,7 @@ module datapath(clk, reset, PCWrite, PCWriteCond, IRWrite, DMEMWrite, RegWrite,
   // ~~~~~~~~~~~~~~~~~~~ PARAMETERS ~~~~~~~~~~~~~~~~~~~ //
 
   parameter word_size = 32;
+  parameter cause_size = 2;
 
   // ~~~~~~~~~~~~~~~~~~~ PORTS ~~~~~~~~~~~~~~~~~~~ //
 
@@ -29,19 +30,19 @@ module datapath(clk, reset, PCWrite, PCWriteCond, IRWrite, DMEMWrite, RegWrite,
   wire [word_size-1:0] PCout;
 
   // EPC
-  output wire EPCout;
-  input wire EPCin;
+  output wire [word_size-1:0]  EPCout;
+  input wire [word_size-1:0]  EPCin;
   input wire EPCWrite;
   
   // Cause Exception
-  output wire [1:0] causeExceptionout;
-  input wire [1:0] causeExceptionin;
-  input wire [1:0] causeExceptionWrite;
+  output wire [cause_size-1:0] causeExceptionout;
+  input wire [cause_size-1:0] causeExceptionin;
+  input wire  causeExceptionWrite;
   
   // Cause Interrupt
-  output wire [1:0] causeInterruptout;
-  input wire [1:0] causeInterruptin;
-  input wire [1:0] causeInterruptWrite;
+  output wire [cause_size-1:0] causeInterruptout;
+  input wire [cause_size-1:0] causeInterruptin;
+  input wire causeInterruptWrite;
   
   // Instruction Memory
   wire [word_size-1:0] IMout;

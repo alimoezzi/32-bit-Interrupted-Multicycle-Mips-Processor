@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2018.2 (64-bit)
+# SW Build 2258646 on Thu Jun 14 20:03:12 MDT 2018
+# IP Build 2256618 on Thu Jun 14 22:10:49 MDT 2018
+# Start of session at: Wed Jul  3 14:58:49 2019
+# Process ID: 15536
+# Current directory: C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.runs/synth_1
+# Command line: vivado.exe -log MultiCycleCPU.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source MultiCycleCPU.tcl
+# Log file: C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.runs/synth_1/MultiCycleCPU.vds
+# Journal file: C:/Users/User/YandexDisk/myVerilog/32bit_interrupted_multicycle_mips_cpu/32bit_interrupted_multicycle_mips_cpu.runs/synth_1\vivado.jou
+#-----------------------------------------------------------
+source MultiCycleCPU.tcl -notrace

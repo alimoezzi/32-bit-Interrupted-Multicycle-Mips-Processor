@@ -33,10 +33,10 @@ module MultiCycleCPU_test;
 	reg cntrlINT;
 	// Outputs
 	wire [31:0] ALUImmResult;
-	wire dpCauseInterruptout;
-	wire dpEPCout;
+	wire [1:0] dpCauseInterruptout;
+	wire [31:0] dpEPCout;
 	wire cntrlINA;
-	wire dpCauseExceptionout;
+	wire [1:0] dpCauseExceptionout;
 
 	// Instantiate the Unit Under Test (UUT)
 	MultiCycleCPU uut (

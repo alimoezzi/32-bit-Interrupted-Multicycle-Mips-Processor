@@ -11,14 +11,15 @@ datapathCauseExceptionout);
   // ~~~~~~~~~~~~~~~~~~~ PARAMETERS ~~~~~~~~~~~~~~~~~~~ //
 
   parameter word_size = 32;
+  parameter cause_size = 2;
   
   // ~~~~~~~~~~~~~~~~~~~~~ INPUTS ~~~~~~~~~~~~~~~~~~~~~~ //
 
   input clk, reset;
-  wire datapathEPCin;
-  wire datapathCauseInterruptin;
+  wire [word_size-1:0] datapathEPCin;
+  wire [cause_size-1:0] datapathCauseInterruptin;
   // wire datapathCauseInterruptWrite; // wirte is always asserted
-  wire datapathCauseExceptionin;
+  wire [cause_size-1:0] datapathCauseExceptionin;
   // wire datapathCauseExceptionWrite; // wirte is always asserted
   // wire datapathEPCWrite; // wirte is always asserted
   input cntrlNMI;
@@ -27,9 +28,9 @@ datapathCauseExceptionout);
   // ~~~~~~~~~~~~~~~~~~~~~ OUTPUTS ~~~~~~~~~~~~~~~~~~~~~~ //
   
   output wire [word_size-1:0] AluRes;
-  output wire datapathCauseInterruptout;
-  output wire datapathCauseExceptionout;
-  output datapathEPCout;
+  output wire [cause_size-1:0] datapathCauseInterruptout;
+  output wire [cause_size-1:0] datapathCauseExceptionout;
+  output [word_size-1:0] datapathEPCout;
   output cntrlINA;
   
   // ~~~~~~~~~~~~~~~~~~~~~ WIRES ~~~~~~~~~~~~~~~~~~~~~~~ //

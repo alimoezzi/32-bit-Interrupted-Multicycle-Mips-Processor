@@ -22,10 +22,10 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
   output reg [1:0] MemtoReg, PCSource, ALUSrcB;
   output reg [3:0] ALUSel;
   output reg INA;
-  output datapathCauseInterruptout; // debug
-  output datapathEPCout; // debug
-  output reg datapathEPCin;
-  output reg datapathCauseInterruptin;
+  output [cause_size-1:0] datapathCauseInterruptout; // debug
+  output [word_size-1:0] datapathEPCout; // debug
+  output reg [word_size-1:0] datapathEPCin;
+  output reg [cause_size-1:0] datapathCauseInterruptin;
   output reg datapathCauseInterruptWrite;
 
   // ~~~~~~~~~~~~~~~~~~~ REGISTER ~~~~~~~~~~~~~~~~~~~ //
@@ -51,6 +51,8 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
   parameter s12 = 4'd12;
   parameter sR  = 4'd13;	// reset
   parameter s14 = 4'd14;
+  parameter word_size = 32;
+  parameter cause_size = 2;
 
   // opcode[5:4] parameters
   parameter J  = 2'b00;	// Jump or NOP
