@@ -6,8 +6,9 @@
 
 module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
                    MemtoReg, PCSource, ALUSel, ALUSrcA, ALUSrcB, RegWrite,
-                   RegReadSel, NMI, INT, INA, datapathCauseInterruptout, datapathEPCout,
-                   datapathEPCin, datapathCauseInterruptin, datapathCauseInterruptWrite);
+                   RegReadSel, NMI, INT, INA, datapathCauseInterruptout,
+                   datapathPCout, datapathEPCout,
+                   datapathEPCin, datapathCauseInterruptin);
 
   // ~~~~~~~~~~~~~~~~~~~ PORTS ~~~~~~~~~~~~~~~~~~~ //
 
@@ -16,6 +17,7 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
   input	clk, reset;
   input NMI;
   input INT;
+  input [word_size-1:0] datapathPCout;
 
   // control signal outputs
   output reg PCWrite, PCWriteCond, DMEMWrite, IRWrite, ALUSrcA, RegWrite, RegReadSel;
@@ -26,7 +28,6 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
   output [word_size-1:0] datapathEPCout; // debug
   output reg [word_size-1:0] datapathEPCin;
   output reg [cause_size-1:0] datapathCauseInterruptin;
-  output reg datapathCauseInterruptWrite;
 
   // ~~~~~~~~~~~~~~~~~~~ REGISTER ~~~~~~~~~~~~~~~~~~~ //
 
@@ -80,13 +81,17 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
   // ~~~~~~~~~~~~~~~~~~~ STATE MACHINE ~~~~~~~~~~~~~~~~~~~ //
   
   // hold INT To handle after instruction execution
-  always @(posedge INT ) begin
-    INTreg <= INT;
+  always @(INT) begin
+    if (INT == 1'b1) begin
+      INTreg <= INT;
+    end
   end
 
   // hold NMI To handle after instruction execution
-  always @(posedge NMI ) begin
-    NMIreg <= NMI;
+  always @(NMI) begin
+    if (NMI == 1'b1) begin
+      NMIreg <= NMI;
+    end
   end
 
 
@@ -105,6 +110,11 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
       ALUSrcA 		<= 0;
       ALUSrcB 		<= 0;
       RegWrite 		<= 0;
+      datapathCauseInterruptin <= 2'b00;
+      datapathEPCin <= {32{1'b0}};
+      INA <= 1'b0;
+      NMIreg <= 1'b0;
+      INTreg <= 1'b0;
 
       state <= sR;
     end
@@ -136,6 +146,7 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
           ALUSrcB 		<= 2'b10;
           RegWrite 		<= 0;
           RegReadSel	<= 0;
+          datapathCauseInterruptin <= 2'b00;
 
           state <= s1;
         end
@@ -431,7 +442,7 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
           ALUSrcB 		<= 2'b01;
           RegWrite 		<= 0;
           PCWriteCond <= 0;
-          
+
           // go over interrupt service routine state
           if (NMIreg || INTreg) begin
             state <= sI;
@@ -488,16 +499,24 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
           end
         end
         // interrupt service routine state
-        // NMI -> 00
-        // INT -> 01
+        // NMI -> 01
+        // INT -> 10
         sI: begin
-          //  datapathEPCin <= pc
+           datapathEPCin = datapathPCout;
           if (NMI) begin
-            datapathCauseInterruptin <= 00;
+            datapathCauseInterruptin = 2'b01;
+          end
+          if (NMI && INT) begin
+            datapathCauseInterruptin = 2'b01;
+            INA <= 1;
           end
           if (INT) begin
-            datapathCauseInterruptin <= 01;
+            datapathCauseInterruptin = 2'b10;
+            INA <= 1;
           end
+          NMIreg <= 1'b0;
+          INTreg <= 1'b0;
+
           state <= s0;
         end
         // go to s0

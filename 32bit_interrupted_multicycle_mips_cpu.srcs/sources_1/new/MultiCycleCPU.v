@@ -36,6 +36,7 @@ datapathCauseExceptionout);
   // ~~~~~~~~~~~~~~~~~~~~~ WIRES ~~~~~~~~~~~~~~~~~~~~~~~ //
 
   wire PCWrite, PCWriteCond, IRWrite, DMEMWrite, RegWrite, ALUSrcA, RegReadSel;
+  wire [word_size-1:0] datapathPCout;
   wire [1:0] MemtoReg, ALUSrcB, PCSource;
   wire [3:0] ALUSel;
   wire [5:0] opcode;
@@ -46,13 +47,9 @@ datapathCauseExceptionout);
 
   datapath	cpu_datapath(clk, reset, PCWrite, PCWriteCond, IRWrite, DMEMWrite,
                          RegWrite, ALUSrcA, RegReadSel, MemtoReg, ALUSrcB,
-                         PCSource, ALUSel, opcode, AluRes, datapathEPCout, datapathEPCin,
-                         1/*datapathEPCWrite*/, datapathCauseExceptionout,
-                         datapathCauseExceptionin,
-                         1/*datapathCauseExceptionWrite*/,
-                         datapathCauseInterruptout,
-                         datapathCauseInterruptin,
-                         1/*datapathCauseInterruptWrite*/ );
+                         PCSource, ALUSel, opcode, AluRes,datapathPCout, datapathEPCout, datapathEPCin,
+                         datapathCauseExceptionout, datapathCauseExceptionin,
+                         datapathCauseInterruptout, datapathCauseInterruptin);
 
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
   // ~~~~~~~~~~~~~~~~~~~ CONTROLLER ~~~~~~~~~~~~~~~~~~~ //
@@ -61,7 +58,7 @@ datapathCauseExceptionout);
   controller	cpu_controller(opcode, clk, reset, PCWrite, PCWriteCond,
                              DMEMWrite, IRWrite, MemtoReg, PCSource, ALUSel,
                              ALUSrcA, ALUSrcB, RegWrite, RegReadSel, cntrlNMI, cntrlINT,cntrlINA, datapathCauseExceptionout,
+                             datapathPCout,
                              datapathEPCout,
-                             datapathEPCin,datapathCauseInterruptin,
-                             datapathCauseInterruptWrite );
+                             datapathEPCin,datapathCauseInterruptin);
 endmodule

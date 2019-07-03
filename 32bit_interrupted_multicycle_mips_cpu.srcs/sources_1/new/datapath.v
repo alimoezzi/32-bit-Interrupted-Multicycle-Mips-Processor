@@ -6,8 +6,8 @@
 
 module datapath(clk, reset, PCWrite, PCWriteCond, IRWrite, DMEMWrite, RegWrite,
                  ALUSrcA, RegReadSel, MemtoReg, ALUSrcB, PCSource, ALUSel,
-                 opcode, ALUResTemp, EPCout, EPCin, EPCWrite, causeExceptionout, causeExceptionin,
-                 causeExceptionWrite, causeInterruptout, causeInterruptin, causeInterruptWrite);
+                 opcode, ALUResTemp, PCout, EPCout, EPCin, causeExceptionout,
+                 causeExceptionin, causeInterruptout, causeInterruptin);
 
   // ~~~~~~~~~~~~~~~~~~~ PARAMETERS ~~~~~~~~~~~~~~~~~~~ //
 
@@ -27,22 +27,19 @@ module datapath(clk, reset, PCWrite, PCWriteCond, IRWrite, DMEMWrite, RegWrite,
 
   // PC
   wire [word_size-1:0] PCin;
-  wire [word_size-1:0] PCout;
+  output [word_size-1:0] PCout;
 
   // EPC
   output wire [word_size-1:0]  EPCout;
   input wire [word_size-1:0]  EPCin;
-  input wire EPCWrite;
   
   // Cause Exception
   output wire [cause_size-1:0] causeExceptionout;
   input wire [cause_size-1:0] causeExceptionin;
-  input wire  causeExceptionWrite;
   
   // Cause Interrupt
   output wire [cause_size-1:0] causeInterruptout;
   input wire [cause_size-1:0] causeInterruptin;
-  input wire causeInterruptWrite;
   
   // Instruction Memory
   wire [word_size-1:0] IMout;
@@ -112,19 +109,22 @@ module datapath(clk, reset, PCWrite, PCWriteCond, IRWrite, DMEMWrite, RegWrite,
   // ~~~~~~~~~~~~~~~~~~~ INTERNAL REGISTERS ~~~~~~~~~~~~~~~~~~~ //
 
   // PC
-  holding_reg	PC(PCout, PCin, PCWrite_datapath, clk, reset);
+  holding_reg PC(PCout, PCin, PCWrite_datapath, clk, reset);
 
   // EPC
   // wirte is always asserted
-  holding_reg EPC(EPCout,EPCin,EPCWrite,clk,reset); 
+  holding_reg  EPC(EPCout,EPCin,1'b1,clk,reset); 
   
   // causeException
   // wirte is always asserted
-  holding_reg causeException(causeExceptionout,causeExceptionin,causeExceptionWrite,clk,reset);
+  holding_reg causeException(causeExceptionout,causeExceptionin,1'b1,clk,reset);
+  defparam  causeException.word_size = cause_size;
   
   // causeInterrupt
   // wirte is always asserted
-  holding_reg causeInterrupt(causeInterruptout,causeInterruptin,causeInterruptWrite,clk,reset);
+  holding_reg  causeInterrupt(causeInterruptout,causeInterruptin,1'b1,clk,reset);
+  defparam  causeInterrupt.word_size = cause_size;
+
    
   // INSTRUCTION REGISTER
   holding_reg IR(IRout, IMout, IRWrite, clk, reset);

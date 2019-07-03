@@ -8,6 +8,7 @@ module controllerTest;
 	reg reset;
 	reg NMI;
 	reg INT;
+	reg [31:0] dpPCout;
 
 	// Outputs
 	wire PCWrite;
@@ -22,11 +23,10 @@ module controllerTest;
 	wire RegWrite;
 	wire RegReadSel;
 	wire INA;
-	wire dpCauseInterruptout;
-	wire dpEPCout;
-	wire dpEPCin;
-	wire dpCauseInterruptin;
-	wire dpCauseInterruptWrite;
+	wire [1:0] dpCauseInterruptout;
+	wire [31:0] dpEPCout;
+	wire [31:0] dpEPCin;
+	wire [1:0] dpCauseInterruptin;
 
 	// Instantiate the Unit Under Test (UUT)
 	controller uut (
@@ -48,10 +48,10 @@ module controllerTest;
 		.INT(INT),
 		.INA(INA),
 		.datapathCauseInterruptout(dpCauseInterruptout),
+		.datapathPCout(dpPCout),
 		.datapathEPCout(dpEPCout),
 		.datapathEPCin(dpEPCin),
-		.datapathCauseInterruptin(dpCauseInterruptin),
-		.datapathCauseInterruptWrite(dpCauseInterruptWrite)
+		.datapathCauseInterruptin(dpCauseInterruptin)
 	);
 
 	always
@@ -69,12 +69,25 @@ module controllerTest;
 		// Add stimulus here
 		// clear reset
 		reset = 0;
+		#100
 
 		// type				  //FN		// state sequence
 
 		// R-TYPE
-		opcode <= 6'b010000; //MOV		0 1 2 6
-		#55;
+		
+		NMI <= 0; //MOV		0 1 2 6 -
+		INT <= 0;
+		opcode <= 6'b010000;
+		#55
+		NMI <= 0; //NOT		0 1 2 6 -
+		INT <= 0;
+		opcode <= 6'b010001; 
+		#40
+		INT <= 1; //MOV		0 1 2 6 +
+		opcode <= 6'b010000; 
+		#65;
+		
+		
 		opcode <= 6'b010001; //NOT		0 1 2 6
 		#40;
 		opcode <= 6'b010010; //ADD		0 1 2 6

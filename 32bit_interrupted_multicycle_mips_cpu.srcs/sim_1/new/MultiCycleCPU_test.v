@@ -37,6 +37,7 @@ module MultiCycleCPU_test;
 	wire [31:0] dpEPCout;
 	wire cntrlINA;
 	wire [1:0] dpCauseExceptionout;
+	
 
 	// Instantiate the Unit Under Test (UUT)
 	MultiCycleCPU uut (
