@@ -114,12 +114,15 @@ module datapath(clk, reset, PCWrite, PCWriteCond, IRWrite, DMEMWrite, RegWrite,
   holding_reg	PC(PCout, PCin, PCWrite_datapath, clk, reset);
 
   // EPC
+  // wirte is always asserted
   holding_reg EPC(EPCout,EPCin,EPCWrite,clk,reset); 
   
   // causeException
+  // wirte is always asserted
   holding_reg causeException(causeExceptionout,causeExceptionin,causeExceptionWrite,clk,reset);
   
   // causeInterrupt
+  // wirte is always asserted
   holding_reg causeInterrupt(causeInterruptout,causeInterruptin,causeInterruptWrite,clk,reset);
    
   // INSTRUCTION REGISTER

@@ -5,7 +5,7 @@
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
 
 
-module MultiCycleCPU(clk, reset,AluRes);
+module MultiCycleCPU(clk, reset,AluRes, datapathCauseInterruptout, datapathEPCout);
   
   // ~~~~~~~~~~~~~~~~~~~ PARAMETERS ~~~~~~~~~~~~~~~~~~~ //
 
@@ -14,10 +14,22 @@ module MultiCycleCPU(clk, reset,AluRes);
   // ~~~~~~~~~~~~~~~~~~~~~ INPUTS ~~~~~~~~~~~~~~~~~~~~~~ //
 
   input clk, reset;
+  wire datapathEPCin;
+  wire datapathCauseInterruptin;
+  // wire datapathCauseInterruptWrite; // wirte is always asserted
+  wire datapathCauseExceptionin;
+  // wire datapathCauseExceptionWrite; // wirte is always asserted
+  // wire datapathEPCWrite; // wirte is always asserted
+  input reg cntrlNMI;
+  input reg cntrlINT;
   
   // ~~~~~~~~~~~~~~~~~~~~~ OUTPUTS ~~~~~~~~~~~~~~~~~~~~~~ //
   
   output wire [word_size-1:0] AluRes;
+  output wire datapathCauseInterruptout;
+  output wire datapathCauseExceptionout;
+  output datapathEPCout;
+  output reg cntrlINA;
   
   // ~~~~~~~~~~~~~~~~~~~~~ WIRES ~~~~~~~~~~~~~~~~~~~~~~~ //
 
@@ -32,7 +44,13 @@ module MultiCycleCPU(clk, reset,AluRes);
 
   datapath	cpu_datapath(clk, reset, PCWrite, PCWriteCond, IRWrite, DMEMWrite,
                          RegWrite, ALUSrcA, RegReadSel, MemtoReg, ALUSrcB,
-                         PCSource, ALUSel, opcode, AluRes);
+                         PCSource, ALUSel, opcode, AluRes, datapathEPCout, datapathEPCin,
+                         1/*datapathEPCWrite*/, datapathCauseExceptionout,
+                         datapathCauseExceptionin,
+                         1/*datapathCauseExceptionWrite*/,
+                         datapathCauseInterruptout,
+                         datapathCauseInterruptin,
+                         1/*datapathCauseInterruptWrite*/ );
 
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
   // ~~~~~~~~~~~~~~~~~~~ CONTROLLER ~~~~~~~~~~~~~~~~~~~ //
@@ -40,5 +58,8 @@ module MultiCycleCPU(clk, reset,AluRes);
 
   controller	cpu_controller(opcode, clk, reset, PCWrite, PCWriteCond,
                              DMEMWrite, IRWrite, MemtoReg, PCSource, ALUSel,
-                             ALUSrcA, ALUSrcB, RegWrite, RegReadSel);
+                             ALUSrcA, ALUSrcB, RegWrite, RegReadSel, cntrlNMI, cntrlINT,cntrlINA, datapathCauseExceptionout,
+                             datapathEPCout,
+                             datapathEPCin,datapathCauseInterruptin,
+                             datapathCauseInterruptWrite );
 endmodule

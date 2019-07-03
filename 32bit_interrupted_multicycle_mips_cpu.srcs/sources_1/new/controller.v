@@ -6,7 +6,8 @@
 
 module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
                    MemtoReg, PCSource, ALUSel, ALUSrcA, ALUSrcB, RegWrite,
-                   RegReadSel, NMI, INT, INA);
+                   RegReadSel, NMI, INT, INA, datapathCauseInterruptout, datapathEPCout,
+                   datapathEPCin, datapathCauseInterruptin, datapathCauseInterruptWrite);
 
   // ~~~~~~~~~~~~~~~~~~~ PORTS ~~~~~~~~~~~~~~~~~~~ //
 
@@ -21,6 +22,11 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
   output reg [1:0] MemtoReg, PCSource, ALUSrcB;
   output reg [3:0] ALUSel;
   output reg INA;
+  output datapathCauseInterruptout; // debug
+  output datapathEPCout; // debug
+  output reg datapathEPCin;
+  output reg datapathCauseInterruptin;
+  output reg datapathCauseInterruptWrite;
 
   // ~~~~~~~~~~~~~~~~~~~ REGISTER ~~~~~~~~~~~~~~~~~~~ //
 
