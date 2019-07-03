@@ -34,14 +34,14 @@ module datapath(clk, reset, PCWrite, PCWriteCond, IRWrite, DMEMWrite, RegWrite,
   input wire EPCWrite;
   
   // Cause Exception
-  output wire causeExceptionout;
-  input wire causeExceptionin;
-  input wire causeExceptionWrite;
+  output wire [1:0] causeExceptionout;
+  input wire [1:0] causeExceptionin;
+  input wire [1:0] causeExceptionWrite;
   
   // Cause Interrupt
-  output wire causeInterruptout;
-  input wire causeInterruptin;
-  input wire causeInterruptWrite;
+  output wire [1:0] causeInterruptout;
+  input wire [1:0] causeInterruptin;
+  input wire [1:0] causeInterruptWrite;
   
   // Instruction Memory
   wire [word_size-1:0] IMout;
