@@ -6,7 +6,8 @@
 
 module datapath(clk, reset, PCWrite, PCWriteCond, IRWrite, DMEMWrite, RegWrite,
                  ALUSrcA, RegReadSel, MemtoReg, ALUSrcB, PCSource, ALUSel,
-                 opcode,ALUResTemp);
+                 opcode, ALUResTemp, EPCout, EPCin, EPCWrite, causeExceptionout, causeExceptionin,
+                 causeExceptionWrite, causeInterruptout, causeInterruptin, causeInterruptWrite);
 
   // ~~~~~~~~~~~~~~~~~~~ PARAMETERS ~~~~~~~~~~~~~~~~~~~ //
 
@@ -27,6 +28,21 @@ module datapath(clk, reset, PCWrite, PCWriteCond, IRWrite, DMEMWrite, RegWrite,
   wire [word_size-1:0] PCin;
   wire [word_size-1:0] PCout;
 
+  // EPC
+  output wire EPCout;
+  input wire EPCin;
+  input wire EPCWrite;
+  
+  // Cause Exception
+  output wire causeExceptionout;
+  input wire causeExceptionin;
+  input wire causeExceptionWrite;
+  
+  // Cause Interrupt
+  output wire causeInterruptout;
+  input wire causeInterruptin;
+  input wire causeInterruptWrite;
+  
   // Instruction Memory
   wire [word_size-1:0] IMout;
 
@@ -97,6 +113,15 @@ module datapath(clk, reset, PCWrite, PCWriteCond, IRWrite, DMEMWrite, RegWrite,
   // PC
   holding_reg	PC(PCout, PCin, PCWrite_datapath, clk, reset);
 
+  // EPC
+  holding_reg EPC(EPCout,EPCin,EPCWrite,clk,reset); 
+  
+  // causeException
+  holding_reg causeException(causeExceptionout,causeExceptionin,causeExceptionWrite,clk,reset);
+  
+  // causeInterrupt
+  holding_reg causeInterrupt(causeInterruptout,causeInterruptin,causeInterruptWrite,clk,reset);
+   
   // INSTRUCTION REGISTER
   holding_reg IR(IRout, IMout, IRWrite, clk, reset);
 
