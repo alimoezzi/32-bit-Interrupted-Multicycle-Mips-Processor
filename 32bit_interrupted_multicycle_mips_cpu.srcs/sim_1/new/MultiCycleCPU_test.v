@@ -31,12 +31,16 @@ module MultiCycleCPU_test;
 	reg reset;
 	// Outputs
 	wire [31:0] ALUImmResult;
+	wire dpCauseInterruptout;
+	wire dpEPCout;
 
 	// Instantiate the Unit Under Test (UUT)
 	MultiCycleCPU uut (
 		.clk(clk),
 		.reset(reset),
-		.AluRes(ALUImmResult)
+		.AluRes(ALUImmResult),
+		.datapathCauseInterruptout(dpCauseInterruptout),
+		.datapathEPCout(dpEPCout)
 	);
 	always
 	#5 clk = ~clk;

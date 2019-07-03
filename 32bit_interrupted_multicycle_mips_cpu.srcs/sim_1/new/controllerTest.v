@@ -6,6 +6,8 @@ module controllerTest;
 	reg [5:0] opcode;
 	reg clk;
 	reg reset;
+	reg NMI;
+	reg INT;
 
 	// Outputs
 	wire PCWrite;
@@ -19,6 +21,12 @@ module controllerTest;
 	wire [1:0] ALUSrcB;
 	wire RegWrite;
 	wire RegReadSel;
+	wire INA;
+	wire dpCauseInterruptout;
+	wire dpEPCout;
+	wire dpEPCin;
+	wire dpCauseInterruptin;
+	wire dpCauseInterruptWrite;
 
 	// Instantiate the Unit Under Test (UUT)
 	controller uut (
@@ -35,7 +43,15 @@ module controllerTest;
 		.ALUSrcA(ALUSrcA),
 		.ALUSrcB(ALUSrcB),
 		.RegWrite(RegWrite),
-		.RegReadSel(RegReadSel)
+		.RegReadSel(RegReadSel),
+		.NMI(NMI),
+		.INT(INT),
+		.INA(INA),
+		.datapathCauseInterruptout(dpCauseInterruptout),
+		.datapathEPCout(dpEPCout),
+		.datapathEPCin(dpEPCin),
+		.datapathCauseInterruptin(dpCauseInterruptin),
+		.datapathCauseInterruptWrite(dpCauseInterruptWrite)
 	);
 
 	always
