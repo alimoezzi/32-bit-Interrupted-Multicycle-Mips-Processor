@@ -6,8 +6,7 @@
 
 module datapath(clk, reset, PCWrite, PCWriteCond, IRWrite, DMEMWrite, RegWrite,
                  ALUSrcA, RegReadSel, MemtoReg, ALUSrcB, PCSource, ALUSel,
-                 opcode, ALUResTemp, PCout, EPCout, EPCin, causeExceptionout,
-                 causeExceptionin, causeInterruptout, causeInterruptin);
+                 opcode, ALUResTemp, PCout, EPCout, EPCin,causeInterruptout, causeInterruptin);
 
   // ~~~~~~~~~~~~~~~~~~~ PARAMETERS ~~~~~~~~~~~~~~~~~~~ //
 
@@ -32,10 +31,6 @@ module datapath(clk, reset, PCWrite, PCWriteCond, IRWrite, DMEMWrite, RegWrite,
   // EPC
   output wire [word_size-1:0]  EPCout;
   input wire [word_size-1:0]  EPCin;
-  
-  // Cause Exception
-  output wire [cause_size-1:0] causeExceptionout;
-  input wire [cause_size-1:0] causeExceptionin;
   
   // Cause Interrupt
   output wire [cause_size-1:0] causeInterruptout;
@@ -113,12 +108,7 @@ module datapath(clk, reset, PCWrite, PCWriteCond, IRWrite, DMEMWrite, RegWrite,
 
   // EPC
   // wirte is always asserted
-  holding_reg  EPC(EPCout,EPCin,1'b1,clk,reset); 
-  
-  // causeException
-  // wirte is always asserted
-  holding_reg causeException(causeExceptionout,causeExceptionin,1'b1,clk,reset);
-  defparam  causeException.word_size = cause_size;
+  holding_reg  EPC(EPCout,EPCin,1'b1,clk,reset);
   
   // causeInterrupt
   // wirte is always asserted

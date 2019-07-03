@@ -5,8 +5,7 @@
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
 
 
-module MultiCycleCPU(clk, reset, cntrlNMI, cntrlINT, cntrlINA, AluRes, datapathCauseInterruptout, datapathEPCout,
-datapathCauseExceptionout);
+module MultiCycleCPU(clk, reset, cntrlNMI, cntrlINT, cntrlINA, AluRes, datapathCauseInterruptout, datapathEPCout);
   
   // ~~~~~~~~~~~~~~~~~~~ PARAMETERS ~~~~~~~~~~~~~~~~~~~ //
 
@@ -18,10 +17,6 @@ datapathCauseExceptionout);
   input clk, reset;
   wire [word_size-1:0] datapathEPCin;
   wire [cause_size-1:0] datapathCauseInterruptin;
-  // wire datapathCauseInterruptWrite; // wirte is always asserted
-  wire [cause_size-1:0] datapathCauseExceptionin;
-  // wire datapathCauseExceptionWrite; // wirte is always asserted
-  // wire datapathEPCWrite; // wirte is always asserted
   input cntrlNMI;
   input cntrlINT;
   
@@ -29,7 +24,6 @@ datapathCauseExceptionout);
   
   output wire [word_size-1:0] AluRes;
   output wire [cause_size-1:0] datapathCauseInterruptout;
-  output wire [cause_size-1:0] datapathCauseExceptionout;
   output [word_size-1:0] datapathEPCout;
   output cntrlINA;
   
@@ -48,7 +42,6 @@ datapathCauseExceptionout);
   datapath	cpu_datapath(clk, reset, PCWrite, PCWriteCond, IRWrite, DMEMWrite,
                          RegWrite, ALUSrcA, RegReadSel, MemtoReg, ALUSrcB,
                          PCSource, ALUSel, opcode, AluRes,datapathPCout, datapathEPCout, datapathEPCin,
-                         datapathCauseExceptionout, datapathCauseExceptionin,
                          datapathCauseInterruptout, datapathCauseInterruptin);
 
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
@@ -57,7 +50,7 @@ datapathCauseExceptionout);
 
   controller	cpu_controller(opcode, clk, reset, PCWrite, PCWriteCond,
                              DMEMWrite, IRWrite, MemtoReg, PCSource, ALUSel,
-                             ALUSrcA, ALUSrcB, RegWrite, RegReadSel, cntrlNMI, cntrlINT,cntrlINA, datapathCauseExceptionout,
+                             ALUSrcA, ALUSrcB, RegWrite, RegReadSel, cntrlNMI, cntrlINT,cntrlINA,
                              datapathPCout,
                              datapathEPCout,
                              datapathEPCin,datapathCauseInterruptin);

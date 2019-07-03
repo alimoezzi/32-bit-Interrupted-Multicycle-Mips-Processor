@@ -36,7 +36,6 @@ module MultiCycleCPU_test;
 	wire [1:0] dpCauseInterruptout;
 	wire [31:0] dpEPCout;
 	wire cntrlINA;
-	wire [1:0] dpCauseExceptionout;
 	
 
 	// Instantiate the Unit Under Test (UUT)
@@ -48,8 +47,7 @@ module MultiCycleCPU_test;
 		.cntrlINA(cntrlINA),
 		.AluRes(ALUImmResult),
 		.datapathCauseInterruptout(dpCauseInterruptout),
-		.datapathEPCout(dpEPCout),
-		.datapathCauseExceptionout(dpCauseExceptionout)
+		.datapathEPCout(dpEPCout)
 	);
 	always
 	#5 clk = ~clk;
