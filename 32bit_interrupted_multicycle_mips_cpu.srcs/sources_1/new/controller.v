@@ -32,6 +32,10 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
 
   // 4-bit state register
   reg [3:0]	state;
+  // 1-bit NMI holder register
+  reg NMIreg;
+  // 1-bit INT holder register
+  reg INTreg;
 
   // ~~~~~~~~~~~~~~~~~~~ PARAMETERS ~~~~~~~~~~~~~~~~~~~ //
 
@@ -51,6 +55,7 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
   parameter s12 = 4'd12;
   parameter sR  = 4'd13;	// reset
   parameter s14 = 4'd14;
+  parameter sI  = 4'd15;
   parameter word_size = 32;
   parameter cause_size = 2;
 
@@ -73,6 +78,17 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
   parameter SWI	 = 4'b1100;
 
   // ~~~~~~~~~~~~~~~~~~~ STATE MACHINE ~~~~~~~~~~~~~~~~~~~ //
+  
+  // hold INT To handle after instruction execution
+  always @(posedge INT ) begin
+    INTreg <= INT;
+  end
+
+  // hold NMI To handle after instruction execution
+  always @(posedge NMI ) begin
+    NMIreg <= NMI;
+  end
+
 
   // control state machine
   always @(posedge clk) begin
@@ -154,7 +170,11 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
                 RegWrite 		<= 0;
                 PCWriteCond <= 0;
 
-                state	<= 0;
+                if (NMIreg || INTreg) begin
+                  state	<= sI;
+                end else begin
+                  state	<= 0;
+                end
               end
               // Jump: go to s12 (jump completion)
               else begin
@@ -291,8 +311,13 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
           ALUSrcB 		<= 2'b01;
           RegWrite 		<= 0;
           PCWriteCond <= 0;
-
-          state <= s0;
+          
+          // go over interrupt service routine state
+          if (NMIreg || INTreg) begin
+            state <= sI;
+          end else begin
+            state <= s0;
+          end
         end
 
         // if in s7 (Reg Gile WB for LWI) go to s0 (IF)
@@ -307,7 +332,12 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
           RegWrite 		<= 0;
           PCWriteCond <= 0;
 
-          state <= s0;
+          // go over interrupt service routine state
+          if (NMIreg || INTreg) begin
+            state <= sI;
+          end else begin
+            state <= s0;
+          end
         end
 
         // if in s8 (MEM write for SWI) go to s0 (IF)
@@ -322,7 +352,12 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
           RegWrite 		<= 0;
           PCWriteCond <= 0;
 
-          state <= s0;
+          // go over interrupt service routine state
+          if (NMIreg || INTreg) begin
+            state <= sI;
+          end else begin
+            state <= s0;
+          end
         end
 
         // if in s9 (Reg WB for LI) go to s0 (IF)
@@ -337,7 +372,12 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
           RegWrite 		<= 0;
           PCWriteCond <= 0;
 
-          state <= s0;
+          // go over interrupt service routine state
+          if (NMIreg || INTreg) begin
+            state <= sI;
+          end else begin
+            state <= s0;
+          end
         end
 
         // if in s10 (Reg WB for LUI) go to s0 (IF)
@@ -352,7 +392,12 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
           RegWrite 		<= 0;
           PCWriteCond <= 0;
 
-          state <= s0;
+          // go over interrupt service routine state
+          if (NMIreg || INTreg) begin
+            state <= sI;
+          end else begin
+            state <= s0;
+          end
         end
 
         // if in s11 (Branch completion) go to s0 (IF)
@@ -367,7 +412,12 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
           RegWrite 		<= 0;
           PCWriteCond <= 0;
 
-          state <= s0;
+          // go over interrupt service routine state
+          if (NMIreg || INTreg) begin
+            state <= sI;
+          end else begin
+            state <= s0;
+          end
         end
 
         // if in s12 (Jump completion) go to s0 (IF)
@@ -381,8 +431,13 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
           ALUSrcB 		<= 2'b01;
           RegWrite 		<= 0;
           PCWriteCond <= 0;
-
-          state <= s0;
+          
+          // go over interrupt service routine state
+          if (NMIreg || INTreg) begin
+            state <= sI;
+          end else begin
+            state <= s0;
+          end
         end
 
         // if in R1 read
@@ -431,6 +486,19 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
 
             state <= s8;
           end
+        end
+        // interrupt service routine state
+        // NMI -> 00
+        // INT -> 01
+        sI: begin
+          //  datapathEPCin <= pc
+          if (NMI) begin
+            datapathCauseInterruptin <= 00;
+          end
+          if (INT) begin
+            datapathCauseInterruptin <= 01;
+          end
+          state <= s0;
         end
         // go to s0
         default: begin
