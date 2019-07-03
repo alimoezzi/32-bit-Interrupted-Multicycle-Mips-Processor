@@ -5,7 +5,8 @@
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
 
 
-module MultiCycleCPU(clk, reset,AluRes, datapathCauseInterruptout, datapathEPCout);
+module MultiCycleCPU(clk, reset, cntrlNMI, cntrlINT, cntrlINA, AluRes, datapathCauseInterruptout, datapathEPCout,
+datapathCauseExceptionout);
   
   // ~~~~~~~~~~~~~~~~~~~ PARAMETERS ~~~~~~~~~~~~~~~~~~~ //
 
@@ -20,8 +21,8 @@ module MultiCycleCPU(clk, reset,AluRes, datapathCauseInterruptout, datapathEPCou
   wire datapathCauseExceptionin;
   // wire datapathCauseExceptionWrite; // wirte is always asserted
   // wire datapathEPCWrite; // wirte is always asserted
-  input reg cntrlNMI;
-  input reg cntrlINT;
+  input cntrlNMI;
+  input cntrlINT;
   
   // ~~~~~~~~~~~~~~~~~~~~~ OUTPUTS ~~~~~~~~~~~~~~~~~~~~~~ //
   
@@ -29,7 +30,7 @@ module MultiCycleCPU(clk, reset,AluRes, datapathCauseInterruptout, datapathEPCou
   output wire datapathCauseInterruptout;
   output wire datapathCauseExceptionout;
   output datapathEPCout;
-  output reg cntrlINA;
+  output cntrlINA;
   
   // ~~~~~~~~~~~~~~~~~~~~~ WIRES ~~~~~~~~~~~~~~~~~~~~~~~ //
 
