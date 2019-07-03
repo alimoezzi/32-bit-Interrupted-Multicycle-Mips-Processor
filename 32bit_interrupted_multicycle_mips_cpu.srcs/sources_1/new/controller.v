@@ -6,18 +6,21 @@
 
 module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
                    MemtoReg, PCSource, ALUSel, ALUSrcA, ALUSrcB, RegWrite,
-                   RegReadSel);
+                   RegReadSel, NMI, INT, INA);
 
   // ~~~~~~~~~~~~~~~~~~~ PORTS ~~~~~~~~~~~~~~~~~~~ //
 
   // opcode, clock, and reset inputs
   input [5:0] opcode;	// from instruction register
   input	clk, reset;
+  input NMI;
+  input INT;
 
   // control signal outputs
   output reg PCWrite, PCWriteCond, DMEMWrite, IRWrite, ALUSrcA, RegWrite, RegReadSel;
   output reg [1:0] MemtoReg, PCSource, ALUSrcB;
   output reg [3:0] ALUSel;
+  output reg INA;
 
   // ~~~~~~~~~~~~~~~~~~~ REGISTER ~~~~~~~~~~~~~~~~~~~ //
 
