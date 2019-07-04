@@ -178,20 +178,20 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
             J: begin
               // NOP: do nothing and go back to s0 (IF) for next instruction
               if (opcode[3:0] == 4'b0000) begin
-                PCWrite 		<= 1;
-                DMEMWrite 	<= 0;
-                IRWrite 		<= 1;
-                PCSource 		<= 2'b00;
-                ALUSel 			<= 4'b0010;
-                ALUSrcA 		<= 0;
-                ALUSrcB 		<= 2'b01;
-                RegWrite 		<= 0;
-                PCWriteCond <= 0;
 
-                if ((NMIreg == 1) || (INTreg == 1)) begin
+                if ((NMIreg == 1) || (INTreg == 1 && INTD == 0)) begin
                   state	<= sI;
                 end else begin
                   state	<= 0;
+                  PCWrite 		<= 1;
+                  DMEMWrite 	<= 0;
+                  IRWrite 		<= 1;
+                  PCSource 		<= 2'b00;
+                  ALUSel 			<= 4'b0010;
+                  ALUSrcA 		<= 0;
+                  ALUSrcB 		<= 2'b01;
+                  RegWrite 		<= 0;
+                  PCWriteCond <= 0;
                 end
               end
               // Jump: go to s12 (jump completion)
@@ -320,141 +320,141 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
 
         // if in s6 (ALUOut WB) go back to s0 (IF)
         s6: begin
-          PCWrite 		<= 1;
-          DMEMWrite 	<= 0;
-          IRWrite 		<= 1;
-          PCSource 		<= 2'b00;
-          ALUSel 			<= 4'b0010;
-          ALUSrcA 		<= 0;
-          ALUSrcB 		<= 2'b01;
-          RegWrite 		<= 0;
-          PCWriteCond <= 0;
           
           // go over interrupt service routine state
-          if ((NMIreg == 1) || (INTreg == 1)) begin
+          if ((NMIreg == 1) || (INTreg == 1 && INTD == 0)) begin
             state <= sI;
           end else begin
             state <= s0;
+            PCWrite 		<= 1;
+            DMEMWrite 	<= 0;
+            IRWrite 		<= 1;
+            PCSource 		<= 2'b00;
+            ALUSel 			<= 4'b0010;
+            ALUSrcA 		<= 0;
+            ALUSrcB 		<= 2'b01;
+            RegWrite 		<= 0;
+            PCWriteCond <= 0;
           end
         end
 
         // if in s7 (Reg Gile WB for LWI) go to s0 (IF)
         s7: begin
-          PCWrite 		<= 1;
-          DMEMWrite 	<= 0;
-          IRWrite 		<= 1;
-          PCSource 		<= 2'b00;
-          ALUSel 			<= 4'b0010;
-          ALUSrcA 		<= 0;
-          ALUSrcB 		<= 2'b01;
-          RegWrite 		<= 0;
-          PCWriteCond <= 0;
 
           // go over interrupt service routine state
-          if ((NMIreg == 1) || (INTreg == 1)) begin
+          if ((NMIreg == 1) || (INTreg == 1 && INTD == 0)) begin
             state <= sI;
           end else begin
             state <= s0;
+            PCWrite 		<= 1;
+            DMEMWrite 	<= 0;
+            IRWrite 		<= 1;
+            PCSource 		<= 2'b00;
+            ALUSel 			<= 4'b0010;
+            ALUSrcA 		<= 0;
+            ALUSrcB 		<= 2'b01;
+            RegWrite 		<= 0;
+            PCWriteCond <= 0;
           end
         end
 
         // if in s8 (MEM write for SWI) go to s0 (IF)
         s8: begin
-          PCWrite 		<= 1;
-          DMEMWrite 	<= 0;
-          IRWrite 		<= 1;
-          PCSource 		<= 2'b00;
-          ALUSel 			<= 4'b0010;
-          ALUSrcA 		<= 0;
-          ALUSrcB 		<= 2'b01;
-          RegWrite 		<= 0;
-          PCWriteCond <= 0;
 
           // go over interrupt service routine state
-          if ((NMIreg == 1) || (INTreg == 1)) begin
+          if ((NMIreg == 1) || (INTreg == 1 && INTD == 0)) begin
             state <= sI;
           end else begin
             state <= s0;
+            PCWrite 		<= 1;
+            DMEMWrite 	<= 0;
+            IRWrite 		<= 1;
+            PCSource 		<= 2'b00;
+            ALUSel 			<= 4'b0010;
+            ALUSrcA 		<= 0;
+            ALUSrcB 		<= 2'b01;
+            RegWrite 		<= 0;
+            PCWriteCond <= 0;
           end
         end
 
         // if in s9 (Reg WB for LI) go to s0 (IF)
         s9: begin
-          PCWrite 		<= 1;
-          DMEMWrite 	<= 0;
-          IRWrite 		<= 1;
-          PCSource 		<= 2'b00;
-          ALUSel 			<= 4'b0010;
-          ALUSrcA 		<= 0;
-          ALUSrcB 		<= 2'b01;
-          RegWrite 		<= 0;
-          PCWriteCond <= 0;
 
           // go over interrupt service routine state
-          if ((NMIreg == 1) || (INTreg == 1)) begin
+          if ((NMIreg == 1) || (INTreg == 1 && INTD == 0)) begin
             state <= sI;
           end else begin
             state <= s0;
+            PCWrite 		<= 1;
+            DMEMWrite 	<= 0;
+            IRWrite 		<= 1;
+            PCSource 		<= 2'b00;
+            ALUSel 			<= 4'b0010;
+            ALUSrcA 		<= 0;
+            ALUSrcB 		<= 2'b01;
+            RegWrite 		<= 0;
+            PCWriteCond <= 0;
           end
         end
 
         // if in s10 (Reg WB for LUI) go to s0 (IF)
         s10: begin
-          PCWrite 		<= 1;
-          DMEMWrite 	<= 0;
-          IRWrite 		<= 1;
-          PCSource 		<= 2'b00;
-          ALUSel 			<= 4'b0010;
-          ALUSrcA 		<= 0;
-          ALUSrcB 		<= 2'b01;
-          RegWrite 		<= 0;
-          PCWriteCond <= 0;
 
           // go over interrupt service routine state
-          if ((NMIreg == 1) || (INTreg == 1)) begin
+          if ((NMIreg == 1) || (INTreg == 1 && INTD == 0)) begin
             state <= sI;
           end else begin
             state <= s0;
+            PCWrite 		<= 1;
+            DMEMWrite 	<= 0;
+            IRWrite 		<= 1;
+            PCSource 		<= 2'b00;
+            ALUSel 			<= 4'b0010;
+            ALUSrcA 		<= 0;
+            ALUSrcB 		<= 2'b01;
+            RegWrite 		<= 0;
+            PCWriteCond <= 0;
           end
         end
 
         // if in s11 (Branch completion) go to s0 (IF)
         s11: begin
-          PCWrite 		<= 1;
-          DMEMWrite 	<= 0;
-          IRWrite 		<= 1;
-          PCSource 		<= 2'b00;
-          ALUSel 			<= 4'b0010;
-          ALUSrcA 		<= 0;
-          ALUSrcB 		<= 2'b01;
-          RegWrite 		<= 0;
-          PCWriteCond <= 0;
 
           // go over interrupt service routine state
-          if ((NMIreg == 1) || (INTreg == 1)) begin
+          if ((NMIreg == 1) || (INTreg == 1 && INTD == 0)) begin
             state <= sI;
           end else begin
             state <= s0;
+            PCWrite 		<= 1;
+            DMEMWrite 	<= 0;
+            IRWrite 		<= 1;
+            PCSource 		<= 2'b00;
+            ALUSel 			<= 4'b0010;
+            ALUSrcA 		<= 0;
+            ALUSrcB 		<= 2'b01;
+            RegWrite 		<= 0;
+            PCWriteCond <= 0;
           end
         end
 
         // if in s12 (Jump completion) go to s0 (IF)
         s12: begin
-          PCWrite 		<= 1;
-          DMEMWrite 	<= 0;
-          IRWrite 		<= 1;
-          PCSource 		<= 2'b00;
-          ALUSel 			<= 4'b0010;
-          ALUSrcA 		<= 0;
-          ALUSrcB 		<= 2'b01;
-          RegWrite 		<= 0;
-          PCWriteCond <= 0;
 
           // go over interrupt service routine state
-          if ((NMIreg == 1) || (INTreg == 1)) begin
+          if ((NMIreg == 1) || (INTreg == 1 && INTD == 0)) begin
             state <= sI;
           end else begin
             state <= s0;
+            PCWrite 		<= 1;
+            DMEMWrite 	<= 0;
+            IRWrite 		<= 1;
+            PCSource 		<= 2'b00;
+            ALUSel 			<= 4'b0010;
+            ALUSrcA 		<= 0;
+            ALUSrcB 		<= 2'b01;
+            RegWrite 		<= 0;
+            PCWriteCond <= 0;
           end
         end
 
@@ -510,6 +510,15 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
         // INT -> 10
         sI: begin
           datapathEPCin <= datapathPCout;
+          PCWrite 		<= 1;
+          DMEMWrite 	<= 0;
+          IRWrite 		<= 1;
+          PCSource 		<= 2'b00;
+          ALUSel 			<= 4'b0010;
+          ALUSrcA 		<= 0;
+          ALUSrcB 		<= 2'b01;
+          RegWrite 		<= 0;
+          PCWriteCond <= 0;
           if (NMI == 1) begin
             datapathCauseInterruptin <= 2'b01;
           end
