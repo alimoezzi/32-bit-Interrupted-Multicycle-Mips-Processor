@@ -35,6 +35,7 @@ module MultiCycleCPU_test;
 	wire [31:0] ALUImmResult;
 	wire [1:0] dpCauseInterruptout;
 	wire [31:0] dpEPCout;
+	wire [31:0] dpPCout;
 	wire cntrlINA;
 	
 
@@ -46,8 +47,10 @@ module MultiCycleCPU_test;
 		.cntrlINT(cntrlINT),
 		.cntrlINA(cntrlINA),
 		.AluRes(ALUImmResult),
-		.mccCauseInterruptout(dpCauseInterruptout),
-		.mccEPCout(dpEPCout)
+		.debugCauseInterruptout(dpCauseInterruptout),
+		.debugEPCout(dpEPCout),
+		.debugPCout(dpPCout)
+
 	);
 	always
 	#5 clk = ~clk;
@@ -55,7 +58,8 @@ module MultiCycleCPU_test;
 		// Initialize Inputs
 		clk = 0;
 		reset = 1;
-
+		cntrlNMI <= 0;
+		cntrlINT <= 0; 
 		// Wait 100 ns for global reset to finish
 		#100;
 

@@ -8,7 +8,7 @@ module controllerTest;
 	reg reset;
 	reg NMI;
 	reg INT;
-	reg [31:0] dpPCout;
+	wire [31:0] dpPCout;
 
 	// Outputs
 	wire PCWrite;
@@ -23,8 +23,6 @@ module controllerTest;
 	wire RegWrite;
 	wire RegReadSel;
 	wire INA;
-	wire [1:0] dpCauseInterruptout;
-	wire [31:0] dpEPCout;
 	wire [31:0] dpEPCin;
 	wire [1:0] dpCauseInterruptin;
 
@@ -47,9 +45,7 @@ module controllerTest;
 		.NMI(NMI),
 		.INT(INT),
 		.INA(INA),
-		.datapathCauseInterruptout(dpCauseInterruptout),
 		.datapathPCout(dpPCout),
-		.datapathEPCout(dpEPCout),
 		.datapathEPCin(dpEPCin),
 		.datapathCauseInterruptin(dpCauseInterruptin)
 	);
@@ -62,6 +58,8 @@ module controllerTest;
 		opcode = 0;
 		clk = 0;
 		reset = 1;
+		NMI <= 0; //MOV		0 1 2 6 -
+		INT <= 0;
 
 		// Wait 100 ns for global reset to finish
 		#100;
@@ -75,8 +73,6 @@ module controllerTest;
 
 		// R-TYPE
 		
-		NMI <= 0; //MOV		0 1 2 6 -
-		INT <= 0;
 		opcode <= 6'b010000;
 		#55
 		NMI <= 0; //NOT		0 1 2 6 -

@@ -5,7 +5,7 @@
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
 
 
-module MultiCycleCPU(clk, reset, cntrlNMI, cntrlINT, cntrlINA, AluRes, mccCauseInterruptout, mccEPCout);
+module MultiCycleCPU(clk, reset, cntrlNMI, cntrlINT, cntrlINA, AluRes, debugCauseInterruptout, debugEPCout, debugPCout);
   
   // ~~~~~~~~~~~~~~~~~~~ PARAMETERS ~~~~~~~~~~~~~~~~~~~ //
 
@@ -22,50 +22,75 @@ module MultiCycleCPU(clk, reset, cntrlNMI, cntrlINT, cntrlINA, AluRes, mccCauseI
   
   output wire [word_size-1:0] AluRes;
   output cntrlINA;
-  output [cause_size-1:0] mccCauseInterruptout;
-  output [word_size-1:0] mccEPCout;
+  output [cause_size-1:0] debugCauseInterruptout;
+  output [word_size-1:0] debugEPCout;
+  output [word_size-1:0] debugPCout;
   
   // ~~~~~~~~~~~~~~~~~~~~~ WIRES ~~~~~~~~~~~~~~~~~~~~~~~ //
 
   wire PCWrite, PCWriteCond, IRWrite, DMEMWrite, RegWrite, ALUSrcA, RegReadSel;
-  wire [word_size-1:0] datapathPCout;
   wire [1:0] MemtoReg, ALUSrcB, PCSource;
   wire [3:0] ALUSel;
   wire [5:0] opcode;
-  wire [cause_size-1:0] datapathCauseInterruptin;
-  wire [cause_size-1:0] datapathCauseInterruptout;
-  wire [word_size-1:0] datapathEPCin;
-  wire [word_size-1:0] datapathEPCout;
+  wire [word_size-1:0] mccPCout;
+  wire [cause_size-1:0] mccCauseInterruptin;
+  wire [cause_size-1:0] mccCauseInterruptout;
+  wire [word_size-1:0] mccpathEPCin;
+  wire [word_size-1:0] mccEPCout;
 
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
   // ~~~~~~~~~~~~~~~~~~~~ DATAPATH ~~~~~~~~~~~~~~~~~~~~ //
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
 
-  datapath	cpu_datapath(.clk(clk), .reset(reset), .PCWrite(PCWrite),
-                         .PCWriteCond(PCWriteCond), .IRWrite(IRWrite),
-                         .DMEMWrite(DMEMWrite), .RegWrite(RegWrite),
-                         .ALUSrcA(ALUSrcA), .RegReadSel(RegReadSel),
-                         .MemtoReg(MemtoReg), .ALUSrcB(ALUSrcB),
-                         .PCSource(PCSource), .ALUSel(ALUSel),
-                         .opcode(opcode), .ALUResTemp(AluRes),
-                         .PCout(datapathPCout), .EPCout(datapathEPCout),
-                         .EPCin(datapathEPCin),
-                         .causeInterruptout(datapathCauseInterruptout),
-                         .causeInterruptin(datapathCauseInterruptin));
+  datapath	cpu_datapath(.clk(clk),
+                         .reset(reset),
+                         .PCWrite(PCWrite),
+                         .PCWriteCond(PCWriteCond),
+                         .IRWrite(IRWrite),
+                         .DMEMWrite(DMEMWrite),
+                         .RegWrite(RegWrite),
+                         .ALUSrcA(ALUSrcA),
+                         .RegReadSel(RegReadSel),
+                         .MemtoReg(MemtoReg),
+                         .ALUSrcB(ALUSrcB),
+                         .PCSource(PCSource),
+                         .ALUSel(ALUSel),
+                         .opcode(opcode),
+                         .ALUResTemp(AluRes),
+                         .PCoutoutside(mccPCout), .EPCout(mccEPCout),
+                         .EPCin(mccpathEPCin),
+                         .causeInterruptout(mccCauseInterruptout),
+                         .causeInterruptin(mccCauseInterruptin));
 
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
   // ~~~~~~~~~~~~~~~~~~~ CONTROLLER ~~~~~~~~~~~~~~~~~~~ //
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
 
-  controller	cpu_controller(opcode, clk, reset, PCWrite, PCWriteCond,
-                             DMEMWrite, IRWrite, MemtoReg, PCSource, ALUSel,
-                             ALUSrcA, ALUSrcB, RegWrite, RegReadSel,
-                             cntrlNMI, cntrlINT, cntrlINA,
-                             datapathPCout, datapathEPCout,
-                             datapathEPCin, datapathCauseInterruptin);
+  controller	cpu_controller(
+                             .opcode(opcode),
+                             .clk(clk),
+                             .reset(reset),
+                             .PCWrite(PCWrite),
+                             .PCWriteCond(PCWriteCond),
+                             .DMEMWrite(DMEMWrite),
+                             .IRWrite(IRWrite),
+                             .MemtoReg(MemtoReg),
+                             .PCSource(PCSource),
+                             .ALUSel(ALUSel),
+                             .ALUSrcA(ALUSrcA),
+                             .ALUSrcB(ALUSrcB),
+                             .RegWrite(RegWrite),
+                             .RegReadSel(RegReadSel),
+                             .NMI(cntrlNMI),
+                             .INT(cntrlINT),
+                             .INA(cntrlINA),
+                             .datapathPCout(mccPCout), 
+                             .datapathEPCin(mccpathEPCin),
+                             .datapathCauseInterruptin(mccCauseInterruptin));
 
 
-  assign mccCauseInterruptout = datapathCauseInterruptout;
-  assign mccEPCout = datapathEPCout;
+  assign debugCauseInterruptout = mccCauseInterruptout;
+  assign debugEPCout = mccEPCout;
+  assign debugPCout = mccPCout;
 
 endmodule

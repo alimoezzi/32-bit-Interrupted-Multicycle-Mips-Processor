@@ -6,7 +6,7 @@
 
 module datapath(clk, reset, PCWrite, PCWriteCond, IRWrite, DMEMWrite, RegWrite,
                  ALUSrcA, RegReadSel, MemtoReg, ALUSrcB, PCSource, ALUSel,
-                 opcode, ALUResTemp, PCout, EPCout, EPCin,causeInterruptout, causeInterruptin);
+                 opcode, ALUResTemp, PCoutoutside, EPCout, EPCin,causeInterruptout, causeInterruptin);
 
   // ~~~~~~~~~~~~~~~~~~~ PARAMETERS ~~~~~~~~~~~~~~~~~~~ //
 
@@ -21,20 +21,30 @@ module datapath(clk, reset, PCWrite, PCWriteCond, IRWrite, DMEMWrite, RegWrite,
   input clk, reset;
   output [5:0] opcode;
   output wire [word_size-1:0] ALUResTemp;
+  // PC
+  output [word_size-1:0] PCoutoutside;
+
+  // EPC
+  output [word_size-1:0]  EPCout;
+  input [word_size-1:0]  EPCin;//*
+  
+  // Cause Interrupt
+  output [cause_size-1:0] causeInterruptout;
+  input [cause_size-1:0] causeInterruptin;//*
 
   // ~~~~~~~~~~~~~~~~~~~ WIRES ~~~~~~~~~~~~~~~~~~~ //
 
   // PC
   wire [word_size-1:0] PCin;
-  output [word_size-1:0] PCout;
+  wire [word_size-1:0] PCout;
 
   // EPC
-  output wire [word_size-1:0]  EPCout;
-  input wire [word_size-1:0]  EPCin;
+  wire [word_size-1:0]  EPCoutinside;
+  wire [word_size-1:0]  EPCininside;
   
   // Cause Interrupt
-  output wire [cause_size-1:0] causeInterruptout;
-  input wire [cause_size-1:0] causeInterruptin;
+  wire [cause_size-1:0] causeInterruptoutinside;
+  wire [cause_size-1:0] causeInterruptininside;
   
   // Instruction Memory
   wire [word_size-1:0] IMout;
@@ -105,15 +115,21 @@ module datapath(clk, reset, PCWrite, PCWriteCond, IRWrite, DMEMWrite, RegWrite,
 
   // PC
   holding_reg PC(PCout, PCin, PCWrite_datapath, clk, reset);
+  assign PCoutoutside = PCout;
 
   // EPC
   // wirte is always asserted
-  holding_reg  EPC(EPCout,EPCin,1'b1,clk,reset);
+  holding_reg  EPC(EPCoutinside,EPCininside,1'b1,clk,reset);
+  assign EPCout = EPCoutinside;//*
+  assign EPCininside = EPCin ;//*
   
   // causeInterrupt
   // wirte is always asserted
-  holding_reg  causeInterrupt(causeInterruptout,causeInterruptin,1'b1,clk,reset);
+  holding_reg  causeInterrupt(causeInterruptoutinside,causeInterruptininside,1'b1,clk,reset);
   defparam  causeInterrupt.word_size = cause_size;
+
+  assign causeInterruptininside = causeInterruptin;//*
+  assign causeInterruptout = causeInterruptoutinside;
 
    
   // INSTRUCTION REGISTER
@@ -154,6 +170,6 @@ module datapath(clk, reset, PCWrite, PCWriteCond, IRWrite, DMEMWrite, RegWrite,
 
   // ALU
   myALU	mainALU(ALU_wire, zero, sourceA, sourceB, ALUSel);
-  assign ALUResTemp=ALU_wire;
+  assign ALUResTemp=ALUOut_wire;
   
 endmodule
