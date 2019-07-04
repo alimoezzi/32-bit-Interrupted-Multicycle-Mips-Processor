@@ -13,7 +13,7 @@ module controllerTest;
 
 	// Outputs
 	wire PCWrite;
-	wire PCWriteCond;
+	wire Branch;
 	wire DMEMWrite;
 	wire IRWrite;
 	wire [1:0] MemtoReg;
@@ -33,7 +33,7 @@ module controllerTest;
 		.clk(clk),
 		.reset(reset),
 		.PCWrite(PCWrite),
-		.PCWriteCond(PCWriteCond),
+		.Branch(Branch),
 		.DMEMWrite(DMEMWrite),
 		.IRWrite(IRWrite),
 		.MemtoReg(MemtoReg),

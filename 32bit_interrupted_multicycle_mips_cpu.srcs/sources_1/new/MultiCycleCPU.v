@@ -29,7 +29,7 @@ module MultiCycleCPU(clk, reset, cntrlNMI, cntrlINT, cntrlINA, cntrlINTD, AluRes
   
   // ~~~~~~~~~~~~~~~~~~~~~ WIRES ~~~~~~~~~~~~~~~~~~~~~~~ //
 
-  wire PCWrite, PCWriteCond, IRWrite, DMEMWrite, RegWrite, ALUSrcA, RegReadSel;
+  wire PCWrite, mccBranch, IRWrite, DMEMWrite, RegWrite, ALUSrcA, RegReadSel;
   wire [1:0] MemtoReg, ALUSrcB, PCSource;
   wire [3:0] ALUSel;
   wire [5:0] opcode;
@@ -46,7 +46,7 @@ module MultiCycleCPU(clk, reset, cntrlNMI, cntrlINT, cntrlINA, cntrlINTD, AluRes
   datapath	cpu_datapath(.clk(clk),
                          .reset(reset),
                          .PCWrite(PCWrite),
-                         .PCWriteCond(PCWriteCond),
+                         .Branch(mccBranch),
                          .IRWrite(IRWrite),
                          .DMEMWrite(DMEMWrite),
                          .RegWrite(RegWrite),
@@ -72,7 +72,7 @@ module MultiCycleCPU(clk, reset, cntrlNMI, cntrlINT, cntrlINA, cntrlINTD, AluRes
                              .clk(clk),
                              .reset(reset),
                              .PCWrite(PCWrite),
-                             .PCWriteCond(PCWriteCond),
+                             .Branch(mccBranch),
                              .DMEMWrite(DMEMWrite),
                              .IRWrite(IRWrite),
                              .MemtoReg(MemtoReg),

@@ -4,7 +4,7 @@
 // ~~~~~~~~~~~~~~~~~~~ CONTROLLER ~~~~~~~~~~~~~~~~~~~ //
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
 
-module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
+module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
                    MemtoReg, PCSource, ALUSel, ALUSrcA, ALUSrcB, RegWrite,
                    RegReadSel, NMI, INT, INA, INTD,
                    datapathPCout,
@@ -27,7 +27,7 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
   input [word_size-1:0] datapathPCout;
 
   // control signal outputs
-  output reg PCWrite, PCWriteCond, DMEMWrite, IRWrite, ALUSrcA, RegWrite, RegReadSel;
+  output reg PCWrite, Branch, DMEMWrite, IRWrite, ALUSrcA, RegWrite, RegReadSel;
   output reg [1:0] MemtoReg, PCSource, ALUSrcB;
   output reg [3:0] ALUSel;
   output reg INA;
@@ -108,7 +108,7 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
     // check for reset signal. If set, write zero to PC and switch to Reset State on next CC.
     if (reset) begin
       PCWrite 		<= 1;
-      PCWriteCond <= 0;
+      Branch <= 0;
       DMEMWrite 	<= 0;
       IRWrite 		<= 0;
       MemtoReg 		<= 0;
@@ -138,7 +138,7 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
           ALUSrcA 		<= 0;
           ALUSrcB 		<= 2'b01;
           RegWrite 		<= 0;
-          PCWriteCond <= 0;
+          Branch <= 0;
 
           state <= s0;
         end
@@ -191,7 +191,7 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
                   ALUSrcA 		<= 0;
                   ALUSrcB 		<= 2'b01;
                   RegWrite 		<= 0;
-                  PCWriteCond <= 0;
+                  Branch <= 0;
                 end
               end
               // Jump: go to s12 (jump completion)
@@ -334,7 +334,7 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
             ALUSrcA 		<= 0;
             ALUSrcB 		<= 2'b01;
             RegWrite 		<= 0;
-            PCWriteCond <= 0;
+            Branch <= 0;
           end
         end
 
@@ -354,7 +354,7 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
             ALUSrcA 		<= 0;
             ALUSrcB 		<= 2'b01;
             RegWrite 		<= 0;
-            PCWriteCond <= 0;
+            Branch <= 0;
           end
         end
 
@@ -374,7 +374,7 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
             ALUSrcA 		<= 0;
             ALUSrcB 		<= 2'b01;
             RegWrite 		<= 0;
-            PCWriteCond <= 0;
+            Branch <= 0;
           end
         end
 
@@ -394,7 +394,7 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
             ALUSrcA 		<= 0;
             ALUSrcB 		<= 2'b01;
             RegWrite 		<= 0;
-            PCWriteCond <= 0;
+            Branch <= 0;
           end
         end
 
@@ -414,7 +414,7 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
             ALUSrcA 		<= 0;
             ALUSrcB 		<= 2'b01;
             RegWrite 		<= 0;
-            PCWriteCond <= 0;
+            Branch <= 0;
           end
         end
 
@@ -434,7 +434,7 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
             ALUSrcA 		<= 0;
             ALUSrcB 		<= 2'b01;
             RegWrite 		<= 0;
-            PCWriteCond <= 0;
+            Branch <= 0;
           end
         end
 
@@ -454,7 +454,7 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
             ALUSrcA 		<= 0;
             ALUSrcB 		<= 2'b01;
             RegWrite 		<= 0;
-            PCWriteCond <= 0;
+            Branch <= 0;
           end
         end
 
@@ -463,7 +463,7 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
           // if Branch, go to s11, branch completion
           if (opcode[5:4] == BR) begin
             PCWrite 		<= 0;
-            PCWriteCond <= 1;
+            Branch <= 1;
             DMEMWrite 	<= 0;
             IRWrite 		<= 0;
             PCSource 		<= 2'b01;
@@ -518,7 +518,7 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
           ALUSrcA 		<= 0;
           ALUSrcB 		<= 2'b01;
           RegWrite 		<= 0;
-          PCWriteCond <= 0;
+          Branch <= 0;
           if (NMI == 1) begin
             datapathCauseInterruptin <= 2'b01;
           end
@@ -543,7 +543,7 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
           ALUSrcA 		<= 0;
           ALUSrcB 		<= 2'b01;
           RegWrite 		<= 0;
-          PCWriteCond <= 0;
+          Branch <= 0;
 
           state <= s0;
         end

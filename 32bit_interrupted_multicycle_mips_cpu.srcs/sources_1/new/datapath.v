@@ -4,7 +4,7 @@
 // ~~~~~~~~~~~~~~~~~~~ DATAPATH ~~~~~~~~~~~~~~~~~~~ //
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
 
-module datapath(clk, reset, PCWrite, PCWriteCond, IRWrite, DMEMWrite, RegWrite,
+module datapath(clk, reset, PCWrite, Branch, IRWrite, DMEMWrite, RegWrite,
                  ALUSrcA, RegReadSel, MemtoReg, ALUSrcB, PCSource, ALUSel,
                  opcode, ALUResTemp, PCoutoutside, EPCout, EPCin,causeInterruptout, causeInterruptin);
 
@@ -15,7 +15,7 @@ module datapath(clk, reset, PCWrite, PCWriteCond, IRWrite, DMEMWrite, RegWrite,
 
   // ~~~~~~~~~~~~~~~~~~~ PORTS ~~~~~~~~~~~~~~~~~~~ //
 
-  input PCWrite, PCWriteCond, IRWrite, DMEMWrite, RegWrite, ALUSrcA, RegReadSel /* 0 for R3, 1 for R1*/;
+  input PCWrite, Branch, IRWrite, DMEMWrite, RegWrite, ALUSrcA, RegReadSel /* 0 for R3, 1 for R1*/;
   input [1:0] MemtoReg, ALUSrcB, PCSource;
   input [3:0] ALUSel;
   input clk, reset;
@@ -84,7 +84,7 @@ module datapath(clk, reset, PCWrite, PCWriteCond, IRWrite, DMEMWrite, RegWrite,
   // ~~~~~~~~~~~~~~~~~~~ PC WRITE SIGNAL ~~~~~~~~~~~~~~~~~~~ //
 
   wire	w1;
-  and	and1(w1, PCWriteCond, zero);
+  and	and1(w1, Branch, zero);
   or or1(PCWrite_datapath, w1, PCWrite);
 
   // ~~~~~~~~~~~~~~~~~~~ ASSIGNMENTS ~~~~~~~~~~~~~~~~~~~ //
