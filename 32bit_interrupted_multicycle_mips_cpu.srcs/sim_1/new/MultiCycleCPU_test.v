@@ -63,35 +63,62 @@ module MultiCycleCPU_test;
 		cntrlNMI <= 0;
 		cntrlINT <= 0; 
 		cntrlINTD <= 0;
+		
 		// Wait 100 ns for global reset to finish
 		#100;
 
 		// Add stimulus here
-		reset <= 0;		// drop reset
+		reset <= 0;		    // drop reset
 		//#1245;			// wait for program to execute
 
-        #300;
+        #200;
         cntrlNMI <= 1;
+        cntrlINT <= 0;
+        cntrlINTD <= 0;
         #45;
         cntrlNMI <= 0;
-        
-        #200
-        cntrlINT <= 1;
-        cntrlINTD <= 0;
-        #45
         cntrlINT <= 0;
         cntrlINTD <= 0;
         
         #200
+        cntrlNMI <= 0;
+        cntrlINT <= 1;
+        cntrlINTD <= 0;
+        #45
+        cntrlNMI <= 0;
+        cntrlINT <= 0;
+        cntrlINTD <= 0;
+        
+        #200
+        cntrlNMI <= 0;
         cntrlINT <= 1;
         cntrlINTD <= 1;
         #45
+        cntrlNMI <= 0;
         cntrlINT <= 0;
         cntrlINTD <= 0;
         
-        #510;
+        #200
+        cntrlNMI <= 1;
+        cntrlINT <= 1;
+        cntrlINTD <= 1;
+        #45
+        cntrlNMI <= 0;
+        cntrlINT <= 0;
+        cntrlINTD <= 0;
         
+        #200
+        cntrlNMI <= 1;
+        cntrlINT <= 1;
+        cntrlINTD <= 0;
+        #45
+        cntrlNMI <= 0;
+        cntrlINT <= 0;
+        cntrlINTD <= 0;
+        
+        #120;        
 		reset <= 1;		// reset cpu
+		
 		#40;
 		reset <= 0;		// program restarts
 	end
