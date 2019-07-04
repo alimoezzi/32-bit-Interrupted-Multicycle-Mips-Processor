@@ -8,6 +8,7 @@ module controllerTest;
 	reg reset;
 	reg NMI;
 	reg INT;
+	reg INTD;
 	wire [31:0] dpPCout;
 
 	// Outputs
@@ -45,6 +46,7 @@ module controllerTest;
 		.NMI(NMI),
 		.INT(INT),
 		.INA(INA),
+		.INTD(INTD),
 		.datapathPCout(dpPCout),
 		.datapathEPCin(dpEPCin),
 		.datapathCauseInterruptin(dpCauseInterruptin)
@@ -60,6 +62,7 @@ module controllerTest;
 		reset = 1;
 		NMI <= 0; //MOV		0 1 2 6 -
 		INT <= 0;
+		INTD <= 0;
 
 		// Wait 100 ns for global reset to finish
 		#100;

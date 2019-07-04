@@ -6,7 +6,7 @@
 
 module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
                    MemtoReg, PCSource, ALUSel, ALUSrcA, ALUSrcB, RegWrite,
-                   RegReadSel, NMI, INT, INA, 
+                   RegReadSel, NMI, INT, INA, INTD,
                    datapathPCout,
                    datapathEPCin, datapathCauseInterruptin);
 
@@ -23,6 +23,7 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
   input	clk, reset;
   input NMI;
   input INT;
+  input INTD;
   input [word_size-1:0] datapathPCout;
 
   // control signal outputs
@@ -84,8 +85,12 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
   
   // hold INT To handle after instruction execution
   always @(INT) begin
-    if (INT == 1'b1) begin
+    if (INT == 1'b1 && INTD == 1'b0) begin
       INTreg <= INT;
+      INA <= 1'b1;
+    end
+    if (INT == 1'b0) begin
+      INA <= 1'b0;
     end
   end
 
@@ -510,11 +515,9 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
           end
           else if ((NMI == 1) && (INT == 1)) begin
             datapathCauseInterruptin <= 2'b01;
-            INA <= 1;
           end
           else if (INT == 1) begin
             datapathCauseInterruptin <= 2'b10;
-            INA <= 1;
           end
           NMIreg <= 1'b0;
           INTreg <= 1'b0;

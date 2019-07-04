@@ -5,7 +5,7 @@
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
 
 
-module MultiCycleCPU(clk, reset, cntrlNMI, cntrlINT, cntrlINA, AluRes, debugCauseInterruptout, debugEPCout, debugPCout);
+module MultiCycleCPU(clk, reset, cntrlNMI, cntrlINT, cntrlINA, cntrlINTD, AluRes, debugCauseInterruptout, debugEPCout, debugPCout);
   
   // ~~~~~~~~~~~~~~~~~~~ PARAMETERS ~~~~~~~~~~~~~~~~~~~ //
 
@@ -17,6 +17,7 @@ module MultiCycleCPU(clk, reset, cntrlNMI, cntrlINT, cntrlINA, AluRes, debugCaus
   input clk, reset;
   input cntrlNMI;
   input cntrlINT;
+  input cntrlINTD;
   
   // ~~~~~~~~~~~~~~~~~~~~~ OUTPUTS ~~~~~~~~~~~~~~~~~~~~~~ //
   
@@ -84,6 +85,7 @@ module MultiCycleCPU(clk, reset, cntrlNMI, cntrlINT, cntrlINA, AluRes, debugCaus
                              .NMI(cntrlNMI),
                              .INT(cntrlINT),
                              .INA(cntrlINA),
+                             .INTD(cntrlINTD),
                              .datapathPCout(mccPCout), 
                              .datapathEPCin(mccpathEPCin),
                              .datapathCauseInterruptin(mccCauseInterruptin));
