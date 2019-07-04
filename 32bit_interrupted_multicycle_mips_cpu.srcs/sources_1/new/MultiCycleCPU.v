@@ -5,7 +5,7 @@
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
 
 
-module MultiCycleCPU(clk, reset, cntrlNMI, cntrlINT, cntrlINA, AluRes, datapathCauseInterruptout, datapathEPCout);
+module MultiCycleCPU(clk, reset, cntrlNMI, cntrlINT, cntrlINA, AluRes, mccCauseInterruptout, mccEPCout);
   
   // ~~~~~~~~~~~~~~~~~~~ PARAMETERS ~~~~~~~~~~~~~~~~~~~ //
 
@@ -15,17 +15,15 @@ module MultiCycleCPU(clk, reset, cntrlNMI, cntrlINT, cntrlINA, AluRes, datapathC
   // ~~~~~~~~~~~~~~~~~~~~~ INPUTS ~~~~~~~~~~~~~~~~~~~~~~ //
 
   input clk, reset;
-  wire [word_size-1:0] datapathEPCin;
-  wire [cause_size-1:0] datapathCauseInterruptin;
   input cntrlNMI;
   input cntrlINT;
   
   // ~~~~~~~~~~~~~~~~~~~~~ OUTPUTS ~~~~~~~~~~~~~~~~~~~~~~ //
   
   output wire [word_size-1:0] AluRes;
-  output wire [cause_size-1:0] datapathCauseInterruptout;
-  output [word_size-1:0] datapathEPCout;
   output cntrlINA;
+  output [cause_size-1:0] mccCauseInterruptout;
+  output [word_size-1:0] mccEPCout;
   
   // ~~~~~~~~~~~~~~~~~~~~~ WIRES ~~~~~~~~~~~~~~~~~~~~~~~ //
 
@@ -34,15 +32,26 @@ module MultiCycleCPU(clk, reset, cntrlNMI, cntrlINT, cntrlINA, AluRes, datapathC
   wire [1:0] MemtoReg, ALUSrcB, PCSource;
   wire [3:0] ALUSel;
   wire [5:0] opcode;
+  wire [cause_size-1:0] datapathCauseInterruptin;
+  wire [cause_size-1:0] datapathCauseInterruptout;
+  wire [word_size-1:0] datapathEPCin;
+  wire [word_size-1:0] datapathEPCout;
 
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
   // ~~~~~~~~~~~~~~~~~~~~ DATAPATH ~~~~~~~~~~~~~~~~~~~~ //
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
 
-  datapath	cpu_datapath(clk, reset, PCWrite, PCWriteCond, IRWrite, DMEMWrite,
-                         RegWrite, ALUSrcA, RegReadSel, MemtoReg, ALUSrcB,
-                         PCSource, ALUSel, opcode, AluRes,datapathPCout, datapathEPCout, datapathEPCin,
-                         datapathCauseInterruptout, datapathCauseInterruptin);
+  datapath	cpu_datapath(.clk(clk), .reset(reset), .PCWrite(PCWrite),
+                         .PCWriteCond(PCWriteCond), .IRWrite(IRWrite),
+                         .DMEMWrite(DMEMWrite), .RegWrite(RegWrite),
+                         .ALUSrcA(ALUSrcA), .RegReadSel(RegReadSel),
+                         .MemtoReg(MemtoReg), .ALUSrcB(ALUSrcB),
+                         .PCSource(PCSource), .ALUSel(ALUSel),
+                         .opcode(opcode), .ALUResTemp(AluRes),
+                         .PCout(datapathPCout), .EPCout(datapathEPCout),
+                         .EPCin(datapathEPCin),
+                         .causeInterruptout(datapathCauseInterruptout),
+                         .causeInterruptin(datapathCauseInterruptin));
 
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
   // ~~~~~~~~~~~~~~~~~~~ CONTROLLER ~~~~~~~~~~~~~~~~~~~ //
@@ -50,8 +59,13 @@ module MultiCycleCPU(clk, reset, cntrlNMI, cntrlINT, cntrlINA, AluRes, datapathC
 
   controller	cpu_controller(opcode, clk, reset, PCWrite, PCWriteCond,
                              DMEMWrite, IRWrite, MemtoReg, PCSource, ALUSel,
-                             ALUSrcA, ALUSrcB, RegWrite, RegReadSel, cntrlNMI, cntrlINT,cntrlINA,
-                             datapathPCout,
-                             datapathEPCout,
-                             datapathEPCin,datapathCauseInterruptin);
+                             ALUSrcA, ALUSrcB, RegWrite, RegReadSel,
+                             cntrlNMI, cntrlINT, cntrlINA,
+                             datapathPCout, datapathEPCout,
+                             datapathEPCin, datapathCauseInterruptin);
+
+
+  assign mccCauseInterruptout = datapathCauseInterruptout;
+  assign mccEPCout = datapathEPCout;
+
 endmodule

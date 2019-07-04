@@ -10,6 +10,12 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
                    datapathPCout, datapathEPCout,
                    datapathEPCin, datapathCauseInterruptin);
 
+
+  // ~~~~~~~~~~~~~~~~~~~ PARAMETERS ~~~~~~~~~~~~~~~~~~~ //
+
+  parameter word_size = 32;
+  parameter cause_size = 2;
+  
   // ~~~~~~~~~~~~~~~~~~~ PORTS ~~~~~~~~~~~~~~~~~~~ //
 
   // opcode, clock, and reset inputs
@@ -18,14 +24,14 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
   input NMI;
   input INT;
   input [word_size-1:0] datapathPCout;
+  input [cause_size-1:0] datapathCauseInterruptout; // debug
+  input [word_size-1:0] datapathEPCout; // debug
 
   // control signal outputs
   output reg PCWrite, PCWriteCond, DMEMWrite, IRWrite, ALUSrcA, RegWrite, RegReadSel;
   output reg [1:0] MemtoReg, PCSource, ALUSrcB;
   output reg [3:0] ALUSel;
   output reg INA;
-  output [cause_size-1:0] datapathCauseInterruptout; // debug
-  output [word_size-1:0] datapathEPCout; // debug
   output reg [word_size-1:0] datapathEPCin;
   output reg [cause_size-1:0] datapathCauseInterruptin;
 
@@ -57,8 +63,6 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
   parameter sR  = 4'd13;	// reset
   parameter s14 = 4'd14;
   parameter sI  = 4'd15;
-  parameter word_size = 32;
-  parameter cause_size = 2;
 
   // opcode[5:4] parameters
   parameter J  = 2'b00;	// Jump or NOP
@@ -181,7 +185,7 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
                 RegWrite 		<= 0;
                 PCWriteCond <= 0;
 
-                if (NMIreg || INTreg) begin
+                if ((NMIreg == 1) || (INTreg == 1)) begin
                   state	<= sI;
                 end else begin
                   state	<= 0;
@@ -324,7 +328,7 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
           PCWriteCond <= 0;
           
           // go over interrupt service routine state
-          if (NMIreg || INTreg) begin
+          if ((NMIreg == 1) || (INTreg == 1)) begin
             state <= sI;
           end else begin
             state <= s0;
@@ -344,7 +348,7 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
           PCWriteCond <= 0;
 
           // go over interrupt service routine state
-          if (NMIreg || INTreg) begin
+          if ((NMIreg == 1) || (INTreg == 1)) begin
             state <= sI;
           end else begin
             state <= s0;
@@ -364,7 +368,7 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
           PCWriteCond <= 0;
 
           // go over interrupt service routine state
-          if (NMIreg || INTreg) begin
+          if ((NMIreg == 1) || (INTreg == 1)) begin
             state <= sI;
           end else begin
             state <= s0;
@@ -384,7 +388,7 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
           PCWriteCond <= 0;
 
           // go over interrupt service routine state
-          if (NMIreg || INTreg) begin
+          if ((NMIreg == 1) || (INTreg == 1)) begin
             state <= sI;
           end else begin
             state <= s0;
@@ -404,7 +408,7 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
           PCWriteCond <= 0;
 
           // go over interrupt service routine state
-          if (NMIreg || INTreg) begin
+          if ((NMIreg == 1) || (INTreg == 1)) begin
             state <= sI;
           end else begin
             state <= s0;
@@ -424,7 +428,7 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
           PCWriteCond <= 0;
 
           // go over interrupt service routine state
-          if (NMIreg || INTreg) begin
+          if ((NMIreg == 1) || (INTreg == 1)) begin
             state <= sI;
           end else begin
             state <= s0;
@@ -444,7 +448,7 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
           PCWriteCond <= 0;
 
           // go over interrupt service routine state
-          if (NMIreg || INTreg) begin
+          if ((NMIreg == 1) || (INTreg == 1)) begin
             state <= sI;
           end else begin
             state <= s0;
@@ -502,16 +506,16 @@ module controller(opcode, clk, reset, PCWrite, PCWriteCond, DMEMWrite, IRWrite,
         // NMI -> 01
         // INT -> 10
         sI: begin
-           datapathEPCin = datapathPCout;
-          if (NMI) begin
-            datapathCauseInterruptin = 2'b01;
+           datapathEPCin <= datapathPCout;
+          if (NMI == 1) begin
+            datapathCauseInterruptin <= 2'b01;
           end
-          if (NMI && INT) begin
-            datapathCauseInterruptin = 2'b01;
+          else if ((NMI == 1) && (INT == 1)) begin
+            datapathCauseInterruptin <= 2'b01;
             INA <= 1;
           end
-          if (INT) begin
-            datapathCauseInterruptin = 2'b10;
+          else if (INT == 1) begin
+            datapathCauseInterruptin <= 2'b10;
             INA <= 1;
           end
           NMIreg <= 1'b0;

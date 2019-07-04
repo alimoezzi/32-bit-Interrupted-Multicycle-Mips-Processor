@@ -46,8 +46,8 @@ module MultiCycleCPU_test;
 		.cntrlINT(cntrlINT),
 		.cntrlINA(cntrlINA),
 		.AluRes(ALUImmResult),
-		.datapathCauseInterruptout(dpCauseInterruptout),
-		.datapathEPCout(dpEPCout)
+		.mccCauseInterruptout(dpCauseInterruptout),
+		.mccEPCout(dpEPCout)
 	);
 	always
 	#5 clk = ~clk;
@@ -61,8 +61,14 @@ module MultiCycleCPU_test;
 
 		// Add stimulus here
 		reset <= 0;		// drop reset
-		#1245;			// wait for program to execute
+		//#1245;			// wait for program to execute
 
+        #300;
+        cntrlNMI <= 1;
+        #45;
+        cntrlNMI <= 0;
+        #1000;
+        
 		reset <= 1;		// reset cpu
 		#40;
 		reset <= 0;		// program restarts
