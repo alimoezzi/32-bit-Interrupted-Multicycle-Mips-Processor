@@ -87,6 +87,8 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
   always @(INT) begin
     if (INT == 1'b1 && INTD == 1'b0) begin
       INTreg <= INT;
+    end
+    if (INT == 1'b1) begin
       INA <= 1'b1;
     end
     if (INT == 1'b0) begin
