@@ -55,6 +55,75 @@ module MultiCycleCPU_test;
 
 	);
 	always
+	// #5 clk = ~clk;
+	// initial begin
+	// 	// Initialize Inputs
+	// 	clk = 0;
+	// 	reset = 1;
+	// 	cntrlNMI <= 0;
+	// 	cntrlINT <= 0; 
+	// 	cntrlINTD <= 0;
+		
+	// 	// Wait 100 ns for global reset to finish
+	// 	#100;
+
+	// 	// Add stimulus here
+	// 	reset <= 0;		    // drop reset
+	// 	//#1245;			// wait for program to execute
+
+    //     #200;
+    //     cntrlNMI <= 1;
+    //     cntrlINT <= 0;
+    //     cntrlINTD <= 0;
+    //     #45;
+    //     cntrlNMI <= 0;
+    //     cntrlINT <= 0;
+    //     cntrlINTD <= 0;
+        
+    //     #200
+    //     cntrlNMI <= 0;
+    //     cntrlINT <= 1;
+    //     cntrlINTD <= 0;
+    //     #45
+    //     cntrlNMI <= 0;
+    //     cntrlINT <= 0;
+    //     cntrlINTD <= 0;
+        
+    //     #200
+    //     cntrlNMI <= 0;
+    //     cntrlINT <= 1;
+    //     cntrlINTD <= 1;
+    //     #45
+    //     cntrlNMI <= 0;
+    //     cntrlINT <= 0;
+    //     cntrlINTD <= 0;
+        
+    //     #200
+    //     cntrlNMI <= 1;
+    //     cntrlINT <= 1;
+    //     cntrlINTD <= 1;
+    //     #45
+    //     cntrlNMI <= 0;
+    //     cntrlINT <= 0;
+    //     cntrlINTD <= 0;
+        
+    //     #200
+    //     cntrlNMI <= 1;
+    //     cntrlINT <= 1;
+    //     cntrlINTD <= 0;
+    //     #45
+    //     cntrlNMI <= 0;
+    //     cntrlINT <= 0;
+    //     cntrlINTD <= 0;
+        
+    //     #120;        
+	// 	reset <= 1;		// reset cpu
+		
+	// 	#40;
+	// 	reset <= 0;		// program restarts
+	
+
+
 	#5 clk = ~clk;
 	initial begin
 		// Initialize Inputs
@@ -69,58 +138,13 @@ module MultiCycleCPU_test;
 
 		// Add stimulus here
 		reset <= 0;		    // drop reset
-		//#1245;			// wait for program to execute
-
-        #200;
-        cntrlNMI <= 1;
-        cntrlINT <= 0;
-        cntrlINTD <= 0;
-        #45;
-        cntrlNMI <= 0;
-        cntrlINT <= 0;
-        cntrlINTD <= 0;
-        
-        #200
-        cntrlNMI <= 0;
-        cntrlINT <= 1;
-        cntrlINTD <= 0;
-        #45
-        cntrlNMI <= 0;
-        cntrlINT <= 0;
-        cntrlINTD <= 0;
-        
-        #200
-        cntrlNMI <= 0;
-        cntrlINT <= 1;
-        cntrlINTD <= 1;
-        #45
-        cntrlNMI <= 0;
-        cntrlINT <= 0;
-        cntrlINTD <= 0;
-        
-        #200
-        cntrlNMI <= 1;
-        cntrlINT <= 1;
-        cntrlINTD <= 1;
-        #45
-        cntrlNMI <= 0;
-        cntrlINT <= 0;
-        cntrlINTD <= 0;
-        
-        #200
-        cntrlNMI <= 1;
-        cntrlINT <= 1;
-        cntrlINTD <= 0;
-        #45
-        cntrlNMI <= 0;
-        cntrlINT <= 0;
-        cntrlINTD <= 0;
-        
-        #120;        
-		reset <= 1;		// reset cpu
-		
-		#40;
-		reset <= 0;		// program restarts
+		#50;			    // ADDI   $R0, $R0, 0x00001  --> $R0 = 1
+		#50;                // ADDI   $R1, $R1, 0x00001  --> $R1 = 1
+		#50;                // AND    $R2, $R0, $R1      --> $R2 = 1 
+		#50;                // ADD    $R3, $R2, $R0      --> $R3 = 2
+		#50;                // XOR    $R4, $R1, $R3      --> $R4 = 3
+		#50;                // SLT    $R5, $R3, $R4      --> $R5 = 1
+		#50;                // ADD    $R6, $R3, $R3      --> $R6 = 4
 	end
 
 endmodule

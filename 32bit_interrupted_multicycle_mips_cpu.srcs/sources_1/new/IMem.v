@@ -2,10 +2,9 @@
 
 // IMem
 //
-// A module used to mimic Instruction memory, for the EC413 project.
+// A module used to mimic Instruction memory,
 // Returns hardcoded instructions based on the current PC.
 //
-// Version2. Posted 7:30PM on Nov 27.
 // Fixed a false nop instruction and reg select fields in 1.
 //
 // ----------------------------------------------------
@@ -17,7 +16,7 @@
 //              and corner cases.
 // - PROGRAM_3: optional LW/SW program.
 //
-`define PROGRAM_1 // <<<<<<<<<<<< CHANGE TEST PROGRAM HERE!
+`define PROGRAM_4 // <<<<<<<<<<<< CHANGE TEST PROGRAM HERE!
 //
 // Change the previous line to try a different program,
 // when available.
@@ -33,6 +32,9 @@ module IMem(PC,          // PC (address) of instruction in IMem
   `else
   `ifdef PROGRAM_3
     parameter PROG_LENGTH= 12;
+  `ifdef PROGRAM_4
+    parameter PROG_LENGTH= 6;
+  `endif  
   `endif
   `endif
   `endif
@@ -287,6 +289,43 @@ module IMem(PC,          // PC (address) of instruction in IMem
       // BLT $R0, $R1 0xFFFC
       12: Instruction= 32'b100001_11111_00000_1111111111111100;
 
+    `else
+    //-----------------------------------------------------
+    `ifdef PROGRAM_4
+    //-----------------------------------------------------
+
+      // My_Example
+      
+      // ADDI   $R0, $R0, 0x00001  --> $R0 = 1
+      0: Instruction=  32'b110010_00000_00000_0000000000000001;
+      // ADDI   $R1, $R1, 0x00001 --> $R1 = 1
+      1: Instruction=  32'b110010_00001_00001_0000000000000001;
+      // AND    $R2, $R0, $R1     --> $R2 = 1
+      2: Instruction= 32'b010101_00000_00001_00010_00000000000;
+      // ADD    $R3, $R2, $R0     --> $R3 = 2
+      3: Instruction=  32'b010010_00010_00000_00011_00000000000;
+      // XOR    $R4, $R1, $R3     --> $R4 = 3
+      4: Instruction= 32'b010110_00001_00011_00100_00000000000;
+      // SLT    $R5, $R3, $R4     --> $R5 = 1
+      5: Instruction= 32'b010111_00011_00100_00101_00000000000;
+      // ADD    $R6, $R3, $R3     --> $R6 = 4
+      6: Instruction=  32'b010010_00011_00011_00110_00000000000;
+      // SW     $R4, $R3[0x2]        --> $R4 into 3
+      //7: Instruction=  32'b111110_00011_00100_0000000000000010;
+      
+
+      // SW  $R0, $R0[0x1]
+      //4: Instruction=  32'b111110_00000_00000_0000000000000001;
+      // ADD  $R5, $R2, $R0: ALUOutput = 1 + (-2) = -1 (0xFFFFFFFF)
+      //8: Instruction=  32'b010010_00101_00010_00000_00000000000;
+      // AND  $R8, $R1, $R0: ALUOutput = (0x00010001 & 0xFFFFFFFE) = 0x00010000
+      //11: Instruction= 32'b010101_01000_00001_00000_00000000000;
+      // XOR  $R9, $R1, $R0: ALUOutput = (0x00010001 ^ 0xFFFFFFFE) = 0xFFFEFFFF
+      //12: Instruction= 32'b010110_01001_00001_00000_00000000000;
+      // SLT  $R10, $R1, $R0: ALUOutput = (0x00010001 < -2) = 0
+      //13: Instruction= 32'b010111_01010_00001_00000_00000000000;
+
+    `endif
     `endif
     `endif
     `endif

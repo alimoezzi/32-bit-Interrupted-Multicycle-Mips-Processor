@@ -154,7 +154,7 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
           ALUSrcA 		<= 0;
           ALUSrcB 		<= 2'b10;
           RegWrite 		<= 0;
-          RegReadSel	<= 0;
+          //RegReadSel	<= 0;
           datapathCauseInterruptin <= 2'b00;
 
           state <= s1;
@@ -172,6 +172,7 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
               ALUSrcA 		<= 1;
               ALUSrcB 		<= 2'b00;
               RegWrite 		<= 0;
+              RegReadSel    <= 1;
 
               state <= s2;
             end
@@ -193,7 +194,7 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
                   ALUSrcA 		<= 0;
                   ALUSrcB 		<= 2'b01;
                   RegWrite 		<= 0;
-                  Branch <= 0;
+                  Branch        <= 0;
                 end
               end
               // Jump: go to s12 (jump completion)
@@ -217,7 +218,8 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
               ALUSrcA 		<= 0;
               ALUSrcB 		<= 2'b10;
               RegWrite 		<= 0;
-              RegReadSel	<= 1; // for R1
+              RegReadSel    <= 0;
+              //RegReadSel	<= 1; // for R1
 
               state <= s14;
             end
@@ -233,6 +235,7 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
                 ALUSrcA 		<= 1;
                 ALUSrcB 		<= 2'b10;
                 RegWrite 		<= 0;
+                RegReadSel      <= 0;
 
                 state <= s3;
               end
@@ -268,7 +271,7 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
                 ALUSrcA 		<= 0;
                 ALUSrcB 		<= 2'b10;
                 RegWrite 		<= 0;
-                RegReadSel	<= 1; // for R1
+                //RegReadSel	<= 1; // for R1
 
                 state <= s14;
               end
@@ -281,7 +284,8 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
           PCWrite 		<= 0;
           DMEMWrite 	<= 0;
           IRWrite 		<= 0;
-          MemtoReg 		<= 2'b00;
+          //MemtoReg 		<= 2'b00;
+          MemtoReg    <= 0;
           RegWrite 		<= 1;
 
           state <= s6;
@@ -292,7 +296,8 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
           PCWrite 		<= 0;
           DMEMWrite 	<= 0;
           IRWrite 		<= 0;
-          MemtoReg 		<= 2'b00;
+          //MemtoReg 		<= 2'b00;
+          MemtoReg    <= 0;
           RegWrite 		<= 1;
 
           state <= s6;
@@ -303,7 +308,8 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
           PCWrite 		<= 0;
           DMEMWrite 	<= 0;
           IRWrite 		<= 0;
-          MemtoReg 		<= 2'b00;
+          //MemtoReg 		<= 2'b00;
+          MemtoReg    <= 0;
           RegWrite 		<= 1;
 
           state <= s6;
@@ -314,7 +320,8 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
           PCWrite 		<= 0;
           DMEMWrite 	<= 0;
           IRWrite 		<= 0;
-          MemtoReg 		<= 2'b01;
+          //MemtoReg 		<= 2'b01;
+          MemtoReg    <= 1;
           RegWrite 		<= 1;
 
           state <= s7;
@@ -473,30 +480,30 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
             ALUSrcA 		<= 1;
             ALUSrcB 		<= 2'b00;
             RegWrite 		<= 0;
-            RegReadSel	<= 1;
+            //RegReadSel	<= 1;
 
             state <= s11;
           end
           // if LI, go to s9 LI WB
-          if (opcode[3:0] == LI) begin
-            PCWrite 		<= 0;
-            DMEMWrite 	<= 0;
-            IRWrite 		<= 0;
-            MemtoReg 		<= 2'b10;
-            RegWrite 		<= 1;
+          // if (opcode[3:0] == LI) begin
+          //   PCWrite 		<= 0;
+          //   DMEMWrite 	<= 0;
+          //   IRWrite 		<= 0;
+          //   MemtoReg 		<= 2'b10;
+          //   RegWrite 		<= 1;
 
-            state <= s9;
-          end
+          //   state <= s9;
+          // end
           // if LUI, go to s10 LUI WB
-          else if (opcode[3:0] == LUI) begin
-            PCWrite 		<= 0;
-            DMEMWrite 	<= 0;
-            IRWrite 		<= 0;
-            MemtoReg 		<= 2'b11;
-            RegWrite 		<= 1;
+          // else if (opcode[3:0] == LUI) begin
+          //   PCWrite 		<= 0;
+          //   DMEMWrite 	<= 0;
+          //   IRWrite 		<= 0;
+          //   MemtoReg 		<= 2'b11;
+          //   RegWrite 		<= 1;
 
-            state <= s10;
-          end
+          //   state <= s10;
+          // end
           // if SWI, go to s8, Mem Access
           else if (opcode[3:0] == SWI) begin
             PCWrite 		<= 0;

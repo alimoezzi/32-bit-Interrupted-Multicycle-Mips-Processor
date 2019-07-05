@@ -91,8 +91,8 @@ module datapath(clk, reset, PCWrite, Branch, IRWrite, DMEMWrite, RegWrite,
 
   assign opcode = IRout[31:26];
   assign immediate = IRout[15:0];
-  assign write_address = IRout[25:21]; // R1
-  assign read_sel_1 = IRout[20:16]; // R2
+  assign read_sel_1 = IRout[25:21]; // R1
+  assign read_sel_2 = IRout[20:16]; // R2
 
   // ~~~~~~~~~~~~~~~~~~~ MEMORY ~~~~~~~~~~~~~~~~~~~ //
 
@@ -151,9 +151,10 @@ module datapath(clk, reset, PCWrite, Branch, IRWrite, DMEMWrite, RegWrite,
   // ~~~~~~~~~~~~~~~~~~~ MULTIPLEXERS ~~~~~~~~~~~~~~~~~~~ //
 
   // Reg File inputs
-  read_mux	read_sel_mux(read_sel_2, IRout[15:11], IRout[25:21], RegReadSel); //B is R3 or R1
-  mux_2bit write_data_mux(write_data, ALUOut_wire, MDRout, {read_data_2[31:16],immediate}, {immediate,read_data_2[15:0]}, MemtoReg);
-
+  read_mux	read_sel_mux(write_address, IRout[20:16], IRout[15:11], RegReadSel); // write_address is R2 or R3
+  mux_1bit write_data_mux(write_data, ALUOut_wire, MDRout, MemtoReg);
+  //mux_2bit write_data_mux(write_data, ALUOut_wire, MDRout, {read_data_2[31:16],immediate}, {immediate,read_data_2[15:0]}, MemtoReg);
+  
   // ALU inputs
   mux_1bit ALUSrcA_mux(sourceA, PCout, Aout, ALUSrcA); // alusrca = 0 -> sourceA = pc
   mux_2bit ALUSrcB_mux(sourceB, Bout, 32'd1, immSE, immZE, ALUSrcB);
