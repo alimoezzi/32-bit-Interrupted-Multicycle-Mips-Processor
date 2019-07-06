@@ -158,7 +158,7 @@ module datapath(clk, reset, PCWrite, Branch, IRWrite, DMEMWrite, RegWrite,
   // ALU inputs
   mux_1bit ALUSrcA_mux(sourceA, PCout, Aout, ALUSrcA); // alusrca = 0 -> sourceA = pc
   mux_2bit ALUSrcB_mux(sourceB, Bout, 32'd1, immSE, immSESH, ALUSrcB);
-
+    
   //PC source mux
   mux_2bit	PC_mux(PCin, ALU_wire, ALUOut_wire, jump_target, 32'h00000000, PCSource);
 
@@ -172,5 +172,13 @@ module datapath(clk, reset, PCWrite, Branch, IRWrite, DMEMWrite, RegWrite,
   // ALU
   myALU	mainALU(ALU_wire, zero, sourceA, sourceB, ALUSel);
   assign ALUResTemp=ALUOut_wire;
+  
+  integer file ;
+  initial begin
+    file = $fopen("results.txt") ;
+    $fdisplay(file, "%b", sourceA) ;
+    $fdisplay(file, "%b", sourceB) ;
+    $fclose(file) ;
+  end
   
 endmodule
