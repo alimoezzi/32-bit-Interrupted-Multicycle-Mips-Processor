@@ -255,30 +255,6 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
 
                 state <= s4;
               end
-
-                // go to s5 (MEM access for LWI)
-              else if (opcode[3:0] == LWI) begin
-                PCWrite 		<= 0;
-                DMEMWrite 	    <= 0;
-                IRWrite 		<= 0;
-                RegWrite 		<= 0;
-                
-
-                state <= s5;
-              end
-              // go to s14 for R1 read
-              else if ((opcode[3:0] == LI) || (opcode[3:0] == LUI) || (opcode[3:0] == SWI))begin
-                PCWrite 		<= 0;
-                DMEMWrite 	    <= 0;
-                IRWrite 		<= 0;
-                ALUSel 			<= 4'b0010;
-                ALUSrcA 		<= 0;
-                ALUSrcB 		<= 2'b10;
-                RegWrite 		<= 0;
-                //RegReadSel	<= 1; // for R1
-
-                state <= s14;
-              end
             end
           endcase
         end
@@ -288,7 +264,6 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
           PCWrite 		<= 0;
           DMEMWrite 	<= 0;
           IRWrite 		<= 0;
-          //MemtoReg 		<= 2'b00;
           MemtoReg      <= 0;
           RegWrite 		<= 1;
 
@@ -300,14 +275,12 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
           PCWrite 		<= 0;
           DMEMWrite 	<= 0;
           IRWrite 		<= 0;
-          //MemtoReg 		<= 2'b00;
           MemtoReg      <= 0;
           RegWrite 		<= 1;
 
           state <= s6;
         end
 
-        // if in s4 (EX for Arithmetic I-type with zero extended Imm) go to s6 (ALUOp WB)
         s4: begin
           if (opcode[3:0] == SW) begin
             PCWrite         <= 0;
@@ -329,7 +302,6 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
           end
         end
 
-        // if in s5 (LWI MEM access) go to s7 (Reg File WB for LWI)
         s5: begin
               
             // go over interrupt service routine state
@@ -369,26 +341,6 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
           end
         end
 
-        // if in s7 (Reg Gile WB for LWI) go to s0 (IF)
-        s7: begin
-
-          // go over interrupt service routine state
-          if ((NMIreg == 1) || (INTreg == 1 && INTD == 0)) begin
-            state <= sI;
-          end else begin
-            state <= s0;
-            PCWrite 		<= 1;
-            DMEMWrite 	    <= 0;
-            IRWrite 		<= 1;
-            PCSource 		<= 2'b00;
-            ALUSel 			<= 4'b0010;
-            ALUSrcA 		<= 0;
-            ALUSrcB 		<= 2'b01;
-            RegWrite 		<= 0;
-            Branch <= 0;
-          end
-        end
-
         // if in s8 (MEM write for SWI) go to s0 (IF)
         s8: begin
 
@@ -406,46 +358,6 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
             ALUSrcB 		<= 2'b01;
             RegWrite 		<= 0;
             Branch          <= 0;
-          end
-        end
-
-        // if in s9 (Reg WB for LI) go to s0 (IF)
-        s9: begin
-
-          // go over interrupt service routine state
-          if ((NMIreg == 1) || (INTreg == 1 && INTD == 0)) begin
-            state <= sI;
-          end else begin
-            state <= s0;
-            PCWrite 		<= 1;
-            DMEMWrite 	    <= 0;
-            IRWrite 		<= 1;
-            PCSource 		<= 2'b00;
-            ALUSel 			<= 4'b0010;
-            ALUSrcA 		<= 0;
-            ALUSrcB 		<= 2'b01;
-            RegWrite 		<= 0;
-            Branch <= 0;
-          end
-        end
-
-        // if in s10 (Reg WB for LUI) go to s0 (IF)
-        s10: begin
-
-          // go over interrupt service routine state
-          if ((NMIreg == 1) || (INTreg == 1 && INTD == 0)) begin
-            state <= sI;
-          end else begin
-            state <= s0;
-            PCWrite 		<= 1;
-            DMEMWrite 	    <= 0;
-            IRWrite 		<= 1;
-            PCSource 		<= 2'b00;
-            ALUSel 			<= 4'b0010;
-            ALUSrcA 		<= 0;
-            ALUSrcB 		<= 2'b01;
-            RegWrite 		<= 0;
-            Branch <= 0;
           end
         end
 
@@ -505,35 +417,6 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
             //RegReadSel	<= 1;
 
             state <= s11;
-          end
-          // if LI, go to s9 LI WB
-          // if (opcode[3:0] == LI) begin
-          //   PCWrite 		<= 0;
-          //   DMEMWrite 	<= 0;
-          //   IRWrite 		<= 0;
-          //   MemtoReg 		<= 2'b10;
-          //   RegWrite 		<= 1;
-
-          //   state <= s9;
-          // end
-          // if LUI, go to s10 LUI WB
-          // else if (opcode[3:0] == LUI) begin
-          //   PCWrite 		<= 0;
-          //   DMEMWrite 	<= 0;
-          //   IRWrite 		<= 0;
-          //   MemtoReg 		<= 2'b11;
-          //   RegWrite 		<= 1;
-
-          //   state <= s10;
-          // end
-          // if SWI, go to s8, Mem Access
-          else if (opcode[3:0] == SWI) begin
-            PCWrite 		<= 0;
-            DMEMWrite 	    <= 1;
-            IRWrite 		<= 0;
-            RegWrite 		<= 0;
-
-            state <= s8;
           end
         end
         // interrupt service routine state
