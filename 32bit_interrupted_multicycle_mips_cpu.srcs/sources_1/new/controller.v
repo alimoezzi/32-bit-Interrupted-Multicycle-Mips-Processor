@@ -80,6 +80,8 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
   parameter LUI	 = 4'b1010;
   parameter LWI	 = 4'b1011;
   parameter SWI	 = 4'b1100;
+  parameter SW   = 4'b1110;
+  parameter LW   = 4'b1101;
 
   // ~~~~~~~~~~~~~~~~~~~ STATE MACHINE ~~~~~~~~~~~~~~~~~~~ //
   
@@ -110,12 +112,12 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
     // check for reset signal. If set, write zero to PC and switch to Reset State on next CC.
     if (reset) begin
       PCWrite 		<= 1;
-      Branch <= 0;
+      Branch        <= 0;
       DMEMWrite 	<= 0;
       IRWrite 		<= 0;
       MemtoReg 		<= 0;
       PCSource 		<= 2'b11; // reset
-      ALUSel 			<= 0;
+      ALUSel 	    <= 0;
       ALUSrcA 		<= 0;
       ALUSrcB 		<= 0;
       RegWrite 		<= 0;
@@ -136,11 +138,11 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
           DMEMWrite 	<= 0;
           IRWrite 		<= 1;
           PCSource 		<= 2'b00;
-          ALUSel 			<= 4'b0010;
+          ALUSel 	    <= 4'b0010;
           ALUSrcA 		<= 0;
           ALUSrcB 		<= 2'b01;
           RegWrite 		<= 0;
-          Branch <= 0;
+          Branch        <= 0;
 
           state <= s0;
         end
@@ -150,7 +152,7 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
           PCWrite 		<= 0;
           DMEMWrite 	<= 0;
           IRWrite 		<= 0;
-          ALUSel 			<= 4'b0010;
+          ALUSel 		<= 4'b0010;
           ALUSrcA 		<= 0;
           ALUSrcB 		<= 2'b10;
           RegWrite 		<= 0;
@@ -168,7 +170,7 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
               PCWrite 		<= 0;
               DMEMWrite 	<= 0;
               IRWrite 		<= 0;
-              ALUSel 			<= opcode[3:0];
+              ALUSel 		<= opcode[3:0];
               ALUSrcA 		<= 1;
               ALUSrcB 		<= 2'b00;
               RegWrite 		<= 0;
@@ -190,7 +192,7 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
                   DMEMWrite 	<= 0;
                   IRWrite 		<= 1;
                   PCSource 		<= 2'b00;
-                  ALUSel 			<= 4'b0010;
+                  ALUSel 		<= 4'b0010;
                   ALUSrcA 		<= 0;
                   ALUSrcB 		<= 2'b01;
                   RegWrite 		<= 0;
@@ -200,7 +202,7 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
               // Jump: go to s12 (jump completion)
               else begin
                 PCWrite 		<= 1;
-                DMEMWrite 	<= 0;
+                DMEMWrite 	    <= 0;
                 IRWrite 		<= 0;
                 PCSource 		<= 2'b10;
                 RegWrite 		<= 0;
@@ -214,7 +216,7 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
               PCWrite 		<= 0;
               DMEMWrite 	<= 0;
               IRWrite 		<= 0;
-              ALUSel 			<= 4'b0010;
+              ALUSel 		<= 4'b0010;
               ALUSrcA 		<= 0;
               ALUSrcB 		<= 2'b10;
               RegWrite 		<= 0;
@@ -229,8 +231,8 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
             // go to s3 (EX for ALU I-type with sign extended immediate)
               if ((opcode[3:0] == ADDI) || (opcode[3:0] == SUBI) || (opcode[3:0] == SLTI)) begin
                 PCWrite 		<= 0;
-                DMEMWrite 	<= 0;
-                IRWrite 		<= 0;
+                DMEMWrite 	    <= 0;
+                IRWrite 	 	<= 0;
                 ALUSel 			<= opcode[3:0];
                 ALUSrcA 		<= 1;
                 ALUSrcB 		<= 2'b10;
@@ -241,14 +243,15 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
               end
 
               // go to s4 (EX for ALU I-type with zero extended immediate)
-              else if ((opcode[3:0] == ORI) || (opcode[3:0] == ANDI) || (opcode[3:0] == XORI)) begin
+              else if ((opcode[3:0] == SW) || (opcode[3:0] == LW)) begin
                 PCWrite 		<= 0;
-                DMEMWrite 	<= 0;
+                DMEMWrite 	    <= 0;
                 IRWrite 		<= 0;
-                ALUSel 			<= opcode[3:0];
+                ALUSel 			<= 4'b0010;
                 ALUSrcA 		<= 1;
-                ALUSrcB 		<= 2'b11;
+                ALUSrcB 		<= 2'b10;
                 RegWrite 		<= 0;
+                RegReadSel      <= 0;
 
                 state <= s4;
               end
@@ -256,16 +259,17 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
                 // go to s5 (MEM access for LWI)
               else if (opcode[3:0] == LWI) begin
                 PCWrite 		<= 0;
-                DMEMWrite 	<= 0;
+                DMEMWrite 	    <= 0;
                 IRWrite 		<= 0;
                 RegWrite 		<= 0;
+                
 
                 state <= s5;
               end
               // go to s14 for R1 read
               else if ((opcode[3:0] == LI) || (opcode[3:0] == LUI) || (opcode[3:0] == SWI))begin
                 PCWrite 		<= 0;
-                DMEMWrite 	<= 0;
+                DMEMWrite 	    <= 0;
                 IRWrite 		<= 0;
                 ALUSel 			<= 4'b0010;
                 ALUSrcA 		<= 0;
@@ -285,7 +289,7 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
           DMEMWrite 	<= 0;
           IRWrite 		<= 0;
           //MemtoReg 		<= 2'b00;
-          MemtoReg    <= 0;
+          MemtoReg      <= 0;
           RegWrite 		<= 1;
 
           state <= s6;
@@ -297,7 +301,7 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
           DMEMWrite 	<= 0;
           IRWrite 		<= 0;
           //MemtoReg 		<= 2'b00;
-          MemtoReg    <= 0;
+          MemtoReg      <= 0;
           RegWrite 		<= 1;
 
           state <= s6;
@@ -305,26 +309,44 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
 
         // if in s4 (EX for Arithmetic I-type with zero extended Imm) go to s6 (ALUOp WB)
         s4: begin
-          PCWrite 		<= 0;
-          DMEMWrite 	<= 0;
-          IRWrite 		<= 0;
-          //MemtoReg 		<= 2'b00;
-          MemtoReg    <= 0;
-          RegWrite 		<= 1;
+          if (opcode[3:0] == SW) begin
+            PCWrite         <= 0;
+            DMEMWrite       <= 1;
+            IRWrite         <= 0;
+            RegWrite        <= 0;
 
-          state <= s6;
+            state <= s8;
+          end
+          else if(opcode[3:0] == LW) begin
+            PCWrite     <= 0;
+            DMEMWrite 	<= 0;
+            IRWrite     <= 0;
+            MemtoReg    <= 0;
+            RegWrite    <= 1;
+            RegReadSel  <= 0;
+            
+            state <= s5;
+          end
         end
 
         // if in s5 (LWI MEM access) go to s7 (Reg File WB for LWI)
         s5: begin
-          PCWrite 		<= 0;
-          DMEMWrite 	<= 0;
-          IRWrite 		<= 0;
-          //MemtoReg 		<= 2'b01;
-          MemtoReg    <= 1;
-          RegWrite 		<= 1;
-
-          state <= s7;
+              
+            // go over interrupt service routine state
+            if ((NMIreg == 1) || (INTreg == 1 && INTD == 0)) begin
+              state <= sI;
+            end else begin
+              state           <= s0;
+              PCWrite         <= 1;
+              DMEMWrite       <= 0;
+              IRWrite         <= 1;
+              PCSource        <= 2'b00;
+              ALUSel          <= 4'b0010;
+              ALUSrcA         <= 0;
+              ALUSrcB         <= 2'b01;
+              RegWrite        <= 0;
+              Branch          <= 0;
+            end
         end
 
         // if in s6 (ALUOut WB) go back to s0 (IF)
@@ -334,16 +356,16 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
           if ((NMIreg == 1) || (INTreg == 1 && INTD == 0)) begin
             state <= sI;
           end else begin
-            state <= s0;
+            state           <= s0;
             PCWrite 		<= 1;
-            DMEMWrite 	<= 0;
+            DMEMWrite 	    <= 0;
             IRWrite 		<= 1;
             PCSource 		<= 2'b00;
             ALUSel 			<= 4'b0010;
             ALUSrcA 		<= 0;
             ALUSrcB 		<= 2'b01;
             RegWrite 		<= 0;
-            Branch <= 0;
+            Branch          <= 0;
           end
         end
 
@@ -356,7 +378,7 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
           end else begin
             state <= s0;
             PCWrite 		<= 1;
-            DMEMWrite 	<= 0;
+            DMEMWrite 	    <= 0;
             IRWrite 		<= 1;
             PCSource 		<= 2'b00;
             ALUSel 			<= 4'b0010;
@@ -374,16 +396,16 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
           if ((NMIreg == 1) || (INTreg == 1 && INTD == 0)) begin
             state <= sI;
           end else begin
-            state <= s0;
+            state           <= s0;
             PCWrite 		<= 1;
-            DMEMWrite 	<= 0;
+            DMEMWrite 	    <= 0;
             IRWrite 		<= 1;
             PCSource 		<= 2'b00;
             ALUSel 			<= 4'b0010;
             ALUSrcA 		<= 0;
             ALUSrcB 		<= 2'b01;
             RegWrite 		<= 0;
-            Branch <= 0;
+            Branch          <= 0;
           end
         end
 
@@ -396,7 +418,7 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
           end else begin
             state <= s0;
             PCWrite 		<= 1;
-            DMEMWrite 	<= 0;
+            DMEMWrite 	    <= 0;
             IRWrite 		<= 1;
             PCSource 		<= 2'b00;
             ALUSel 			<= 4'b0010;
@@ -416,7 +438,7 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
           end else begin
             state <= s0;
             PCWrite 		<= 1;
-            DMEMWrite 	<= 0;
+            DMEMWrite 	    <= 0;
             IRWrite 		<= 1;
             PCSource 		<= 2'b00;
             ALUSel 			<= 4'b0010;
@@ -436,7 +458,7 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
           end else begin
             state <= s0;
             PCWrite 		<= 1;
-            DMEMWrite 	<= 0;
+            DMEMWrite 	    <= 0;
             IRWrite 		<= 1;
             PCSource 		<= 2'b00;
             ALUSel 			<= 4'b0010;
@@ -456,14 +478,14 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
           end else begin
             state <= s0;
             PCWrite 		<= 1;
-            DMEMWrite 	<= 0;
+            DMEMWrite 	    <= 0;
             IRWrite 		<= 1;
             PCSource 		<= 2'b00;
             ALUSel 			<= 4'b0010;
             ALUSrcA 		<= 0;
             ALUSrcB 		<= 2'b01;
             RegWrite 		<= 0;
-            Branch <= 0;
+            Branch          <= 0;
           end
         end
 
@@ -472,8 +494,8 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
           // if Branch, go to s11, branch completion
           if (opcode[5:4] == BR) begin
             PCWrite 		<= 0;
-            Branch <= 1;
-            DMEMWrite 	<= 0;
+            Branch          <= 1;
+            DMEMWrite 	    <= 0;
             IRWrite 		<= 0;
             PCSource 		<= 2'b01;
             ALUSel 			<= 4'b0011;
@@ -507,7 +529,7 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
           // if SWI, go to s8, Mem Access
           else if (opcode[3:0] == SWI) begin
             PCWrite 		<= 0;
-            DMEMWrite 	<= 1;
+            DMEMWrite 	    <= 1;
             IRWrite 		<= 0;
             RegWrite 		<= 0;
 
@@ -523,7 +545,7 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
           DMEMWrite 	<= 0;
           IRWrite 		<= 1;
           PCSource 		<= 2'b00;
-          ALUSel 			<= 4'b0010;
+          ALUSel 		<= 4'b0010;
           ALUSrcA 		<= 0;
           ALUSrcB 		<= 2'b01;
           RegWrite 		<= 0;
@@ -548,7 +570,7 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
           DMEMWrite 	<= 0;
           IRWrite 		<= 1;
           PCSource 		<= 2'b00;
-          ALUSel 			<= 4'b0010;
+          ALUSel 		<= 4'b0010;
           ALUSrcA 		<= 0;
           ALUSrcB 		<= 2'b01;
           RegWrite 		<= 0;

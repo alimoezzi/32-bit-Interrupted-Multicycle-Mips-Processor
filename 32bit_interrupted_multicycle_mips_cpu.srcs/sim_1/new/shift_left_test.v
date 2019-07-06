@@ -1,15 +1,15 @@
 `timescale 1ns / 1ps
 
-module zero_extend_test;
+module shift_left_test;
 
 	// Inputs
-	reg [15:0] input_data;
+	reg [31:0] input_data;
 
 	// Outputs
 	wire [31:0] output_data;
 
 	// Instantiate the Unit Under Test (UUT)
-	zero_extend uut (
+	shift_left uut (
 		.input_data(input_data), 
 		.output_data(output_data)
 	);
@@ -22,10 +22,7 @@ module zero_extend_test;
 		#100;
         
 		// Add stimulus here
-		input_data = 16'hFFFF;	// negative number
-		#20;
-		
-		input_data = 16'h7FFF;	// positive number
+		input_data = {32{1'b1}};
 	end
       
 endmodule

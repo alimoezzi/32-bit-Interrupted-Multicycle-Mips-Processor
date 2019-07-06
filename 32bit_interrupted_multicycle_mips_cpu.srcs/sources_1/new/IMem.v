@@ -33,7 +33,7 @@ module IMem(PC,          // PC (address) of instruction in IMem
   `ifdef PROGRAM_3
     parameter PROG_LENGTH= 12;
   `ifdef PROGRAM_4
-    parameter PROG_LENGTH= 6;
+    parameter PROG_LENGTH= 8;
   `endif  
   `endif
   `endif
@@ -310,20 +310,10 @@ module IMem(PC,          // PC (address) of instruction in IMem
       5: Instruction= 32'b010111_00011_00100_00101_00000000000;
       // ADD    $R6, $R3, $R3     --> $R6 = 4
       6: Instruction=  32'b010010_00011_00011_00110_00000000000;
-      // SW     $R4, $R3[0x2]        --> $R4 into 3
-      //7: Instruction=  32'b111110_00011_00100_0000000000000010;
-      
-
-      // SW  $R0, $R0[0x1]
-      //4: Instruction=  32'b111110_00000_00000_0000000000000001;
-      // ADD  $R5, $R2, $R0: ALUOutput = 1 + (-2) = -1 (0xFFFFFFFF)
-      //8: Instruction=  32'b010010_00101_00010_00000_00000000000;
-      // AND  $R8, $R1, $R0: ALUOutput = (0x00010001 & 0xFFFFFFFE) = 0x00010000
-      //11: Instruction= 32'b010101_01000_00001_00000_00000000000;
-      // XOR  $R9, $R1, $R0: ALUOutput = (0x00010001 ^ 0xFFFFFFFE) = 0xFFFEFFFF
-      //12: Instruction= 32'b010110_01001_00001_00000_00000000000;
-      // SLT  $R10, $R1, $R0: ALUOutput = (0x00010001 < -2) = 0
-      //13: Instruction= 32'b010111_01010_00001_00000_00000000000;
+      // SW     $R4, $R3[0x1]     --> $R4 into 3
+      7: Instruction=  32'b111110_00011_00100_0000000000000001;
+      // LW  $R7, $R3[0x1]        --> $R7 = $R4 = 3
+      8: Instruction= 32'b111101_00011_00111_0000000000000001;
 
     `endif
     `endif

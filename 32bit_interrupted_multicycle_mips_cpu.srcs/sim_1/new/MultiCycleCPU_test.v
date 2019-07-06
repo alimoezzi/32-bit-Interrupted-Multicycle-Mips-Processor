@@ -145,6 +145,8 @@ module MultiCycleCPU_test;
 		#50;                // XOR    $R4, $R1, $R3      --> $R4 = 3
 		#50;                // SLT    $R5, $R3, $R4      --> $R5 = 1
 		#50;                // ADD    $R6, $R3, $R3      --> $R6 = 4
+		#50;                // SW     $R4, $R3[0x1]      --> $R4 into 3
+		#50;                 // LW     $R7, $R3[0x1]      --> $R7 = $R4 = 3
 	end
 
 endmodule

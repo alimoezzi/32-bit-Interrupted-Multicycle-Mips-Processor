@@ -12,8 +12,8 @@ verilog xil_defaultlib  \
 "../../../../32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/myALU.v" \
 "../../../../32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/nbit_register_file.v" \
 "../../../../32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/read_mux.v" \
+"../../../../32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/shift_left.v" \
 "../../../../32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/sign_extend.v" \
-"../../../../32bit_interrupted_multicycle_mips_cpu.srcs/sources_1/new/zero_extend.v" \
 "../../../../32bit_interrupted_multicycle_mips_cpu.srcs/sim_1/new/MultiCycleCPU_test.v" \
 
 # compile glbl module

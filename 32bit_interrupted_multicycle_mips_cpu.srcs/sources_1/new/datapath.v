@@ -59,8 +59,8 @@ module datapath(clk, reset, PCWrite, Branch, IRWrite, DMEMWrite, RegWrite,
   // Memory Data Register
   wire [word_size-1:0] MDRout;
 
-  // Sign/Zero Extension
-  wire [word_size-1:0] immZE, immSE;
+  // Sign/Sign+Shift Extension
+  wire [word_size-1:0] immSE, immSESH;
 
   // Reg File
   wire [4:0] read_sel_1, read_sel_2, write_address;
@@ -144,9 +144,9 @@ module datapath(clk, reset, PCWrite, Branch, IRWrite, DMEMWrite, RegWrite,
 
   // ~~~~~~~~~~~~~~~~~~~ EXTENDERS ~~~~~~~~~~~~~~~~~~~ //
 
-  // ZE(imm) and SE(imm)
-  zero_extend	ZE(immediate, immZE);
+  // SE(imm) and SESH(imm)
   sign_extend SE(immediate, immSE);
+  shift_left  shift(immSE, immSESH);
 
   // ~~~~~~~~~~~~~~~~~~~ MULTIPLEXERS ~~~~~~~~~~~~~~~~~~~ //
 
@@ -157,7 +157,7 @@ module datapath(clk, reset, PCWrite, Branch, IRWrite, DMEMWrite, RegWrite,
   
   // ALU inputs
   mux_1bit ALUSrcA_mux(sourceA, PCout, Aout, ALUSrcA); // alusrca = 0 -> sourceA = pc
-  mux_2bit ALUSrcB_mux(sourceB, Bout, 32'd1, immSE, immZE, ALUSrcB);
+  mux_2bit ALUSrcB_mux(sourceB, Bout, 32'd1, immSE, immSESH, ALUSrcB);
 
   //PC source mux
   mux_2bit	PC_mux(PCin, ALU_wire, ALUOut_wire, jump_target, 32'h00000000, PCSource);
