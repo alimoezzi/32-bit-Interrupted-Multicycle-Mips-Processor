@@ -15,7 +15,7 @@ module datapath(clk, reset, PCWrite, Branch, IRWrite, DMEMWrite, RegWrite,
 
   // ~~~~~~~~~~~~~~~~~~~ PORTS ~~~~~~~~~~~~~~~~~~~ //
 
-  input PCWrite, Branch, IRWrite, DMEMWrite, RegWrite, ALUSrcA, RegReadSel /* 0 for R3, 1 for R1*/;
+  input PCWrite, Branch, IRWrite, DMEMWrite, RegWrite, ALUSrcA, RegReadSel;
   input [1:0] MemtoReg, ALUSrcB, PCSource;
   input [3:0] ALUSel;
   input clk, reset;
@@ -172,13 +172,5 @@ module datapath(clk, reset, PCWrite, Branch, IRWrite, DMEMWrite, RegWrite,
   // ALU
   myALU	mainALU(ALU_wire, zero, sourceA, sourceB, ALUSel);
   assign ALUResTemp=ALUOut_wire;
-  
-  integer file ;
-  initial begin
-    file = $fopen("results.txt") ;
-    $fdisplay(file, "%b", sourceA) ;
-    $fdisplay(file, "%b", sourceB) ;
-    $fclose(file) ;
-  end
   
 endmodule

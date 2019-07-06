@@ -57,6 +57,15 @@ module MultiCycleCPU_test;
 	);
 	always
 	#5 clk = ~clk;
+	
+	  //Clock and reset release
+    initial begin
+      clk=0; reset=1; //Clock low at time zero
+      @(posedge clk);
+      @(posedge clk);
+      reset=0;
+    end
+  
 	initial begin
 		// Initialize Inputs
 		clk = 0;
@@ -146,11 +155,14 @@ module MultiCycleCPU_test;
             #50;                // ADD    $R3, $R2, $R0      --> $R3 = 2
             #50;                // XOR    $R4, $R1, $R3      --> $R4 = 3
             #50;                // SLT    $R5, $R3, $R4      --> $R5 = 1
+            #50;                // J 2
+            #50;                // ADD    $R6, $R3, $R3      --> $R6 = 4
             #50;                // ADD    $R6, $R3, $R3      --> $R6 = 4
             #50;                // SW     $R4, $R3[0x1]      --> $R4 into 3
             #50;                // LW     $R7, $R3[0x1]      --> $R7 = $R4 = 3
 	   `endif
 	   `endif
+	   
 	end
 
 endmodule

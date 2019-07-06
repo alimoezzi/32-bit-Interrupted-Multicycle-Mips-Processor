@@ -377,7 +377,7 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
             ALUSrcA 		<= 0;
             ALUSrcB 		<= 2'b01;
             RegWrite 		<= 0;
-            Branch <= 0;
+            Branch          <= 0;
           end
         end
 
