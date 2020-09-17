@@ -8,13 +8,15 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
                    MemtoReg, PCSource, ALUSel, ALUSrcA, ALUSrcB, RegWrite,
                    RegReadSel, NMI, INT, INA, INTD,
                    datapathPCout,
-                   datapathEPCin, datapathCauseInterruptin);
+                   datapathEPCin, datapathCauseInterruptin,
+                   datapathPCin);
 
 
   // ~~~~~~~~~~~~~~~~~~~ PARAMETERS ~~~~~~~~~~~~~~~~~~~ //
 
   parameter word_size = 32;
   parameter cause_size = 2;
+  integer a;
   
   // ~~~~~~~~~~~~~~~~~~~ PORTS ~~~~~~~~~~~~~~~~~~~ //
 
@@ -32,6 +34,7 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
   output reg [3:0] ALUSel;
   output reg INA;
   output reg [word_size-1:0] datapathEPCin;
+  output reg [word_size-1:0] datapathPCin;
   output reg [cause_size-1:0] datapathCauseInterruptin;
 
   // ~~~~~~~~~~~~~~~~~~~ REGISTER ~~~~~~~~~~~~~~~~~~~ //
@@ -123,6 +126,7 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
       RegWrite 		<= 0;
       datapathCauseInterruptin <= 2'b00;
       datapathEPCin <= {32{1'b0}};
+      datapathPCin <= {32{1'b0}};
       INA <= 1'b0;
       NMIreg <= 1'b0;
       INTreg <= 1'b0;
@@ -306,6 +310,15 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
               
             // go over interrupt service routine state
             if ((NMIreg == 1) || (INTreg == 1 && INTD == 0)) begin
+              PCWrite 		<= 1;
+              DMEMWrite 	<= 0;
+              IRWrite 		<= 0;
+              PCSource 		<= 2'b00;
+              ALUSel 		<= 4'b0010;
+              ALUSrcA 		<= 0;
+              ALUSrcB 		<= 2'b01;
+              RegWrite 		<= 0;
+              Branch <= 0;
               state <= sI;
             end else begin
               state           <= s0;
@@ -326,6 +339,15 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
           
           // go over interrupt service routine state
           if ((NMIreg == 1) || (INTreg == 1 && INTD == 0)) begin
+            PCWrite 		<= 1;
+            DMEMWrite 	<= 0;
+            IRWrite 		<= 0;
+            PCSource 		<= 2'b00;
+            ALUSel 		<= 4'b0010;
+            ALUSrcA 		<= 0;
+            ALUSrcB 		<= 2'b01;
+            RegWrite 		<= 0;
+            Branch <= 0;
             state <= sI;
           end else begin
             state           <= s0;
@@ -346,6 +368,15 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
 
           // go over interrupt service routine state
           if ((NMIreg == 1) || (INTreg == 1 && INTD == 0)) begin
+            PCWrite 		<= 1;
+            DMEMWrite 	<= 0;
+            IRWrite 		<= 0;
+            PCSource 		<= 2'b00;
+            ALUSel 		<= 4'b0010;
+            ALUSrcA 		<= 0;
+            ALUSrcB 		<= 2'b01;
+            RegWrite 		<= 0;
+            Branch <= 0;
             state <= sI;
           end else begin
             state           <= s0;
@@ -366,6 +397,15 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
 
           // go over interrupt service routine state
           if ((NMIreg == 1) || (INTreg == 1 && INTD == 0)) begin
+            PCWrite 		<= 1;
+            DMEMWrite 	<= 0;
+            IRWrite 		<= 0;
+            PCSource 		<= 2'b00;
+            ALUSel 		<= 4'b0010;
+            ALUSrcA 		<= 0;
+            ALUSrcB 		<= 2'b01;
+            RegWrite 		<= 0;
+            Branch <= 0;
             state <= sI;
           end else begin
             state <= s0;
@@ -386,6 +426,15 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
 
           // go over interrupt service routine state
           if ((NMIreg == 1) || (INTreg == 1 && INTD == 0)) begin
+            PCWrite 		<= 1;
+            DMEMWrite 	<= 0;
+            IRWrite 		<= 0;
+            PCSource 		<= 2'b00;
+            ALUSel 		<= 4'b0010;
+            ALUSrcA 		<= 0;
+            ALUSrcB 		<= 2'b01;
+            RegWrite 		<= 0;
+            Branch <= 0;
             state <= sI;
           end else begin
             state <= s0;
@@ -424,6 +473,14 @@ module controller(opcode, clk, reset, PCWrite, Branch, DMEMWrite, IRWrite,
         // INT -> 10
         sI: begin
           datapathEPCin <= datapathPCout;
+          a = datapathEPCin ;
+          datapathPCin <= 32'd64;
+          #15
+          datapathPCin <= a;
+          #5
+          datapathPCin <= 32'd0;
+
+
           PCWrite 		<= 1;
           DMEMWrite 	<= 0;
           IRWrite 		<= 1;

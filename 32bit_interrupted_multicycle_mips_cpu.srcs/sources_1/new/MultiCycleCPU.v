@@ -37,6 +37,7 @@ module MultiCycleCPU(clk, reset, cntrlNMI, cntrlINT, cntrlINA, cntrlINTD, AluRes
   wire [cause_size-1:0] mccCauseInterruptin;
   wire [cause_size-1:0] mccCauseInterruptout;
   wire [word_size-1:0] mccpathEPCin;
+  wire [word_size-1:0] mccpathPCin;
   wire [word_size-1:0] mccEPCout;
 
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
@@ -61,7 +62,8 @@ module MultiCycleCPU(clk, reset, cntrlNMI, cntrlINT, cntrlINA, cntrlINTD, AluRes
                          .PCoutoutside(mccPCout), .EPCout(mccEPCout),
                          .EPCin(mccpathEPCin),
                          .causeInterruptout(mccCauseInterruptout),
-                         .causeInterruptin(mccCauseInterruptin));
+                         .causeInterruptin(mccCauseInterruptin),
+                         .PCinoutside(mccpathPCin));
 
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
   // ~~~~~~~~~~~~~~~~~~~ CONTROLLER ~~~~~~~~~~~~~~~~~~~ //
@@ -88,7 +90,8 @@ module MultiCycleCPU(clk, reset, cntrlNMI, cntrlINT, cntrlINA, cntrlINTD, AluRes
                              .INTD(cntrlINTD),
                              .datapathPCout(mccPCout), 
                              .datapathEPCin(mccpathEPCin),
-                             .datapathCauseInterruptin(mccCauseInterruptin));
+                             .datapathCauseInterruptin(mccCauseInterruptin),
+                             .datapathPCin(mccpathPCin));
 
 
   assign debugCauseInterruptout = mccCauseInterruptout;

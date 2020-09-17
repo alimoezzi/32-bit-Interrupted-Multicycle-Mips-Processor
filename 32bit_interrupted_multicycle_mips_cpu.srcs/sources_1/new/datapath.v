@@ -6,7 +6,8 @@
 
 module datapath(clk, reset, PCWrite, Branch, IRWrite, DMEMWrite, RegWrite,
                  ALUSrcA, RegReadSel, MemtoReg, ALUSrcB, PCSource, ALUSel,
-                 opcode, ALUResTemp, PCoutoutside, EPCout, EPCin,causeInterruptout, causeInterruptin);
+                 opcode, ALUResTemp, PCoutoutside, EPCout, EPCin,causeInterruptout, causeInterruptin ,
+                 PCinoutside);
 
   // ~~~~~~~~~~~~~~~~~~~ PARAMETERS ~~~~~~~~~~~~~~~~~~~ //
 
@@ -37,6 +38,8 @@ module datapath(clk, reset, PCWrite, Branch, IRWrite, DMEMWrite, RegWrite,
   // PC
   wire [word_size-1:0] PCin;
   wire [word_size-1:0] PCout;
+  wire [word_size-1:0] PCtemp;
+  input [word_size-1:0] PCinoutside;
 
   // EPC
   wire [word_size-1:0]  EPCoutinside;
@@ -114,8 +117,11 @@ module datapath(clk, reset, PCWrite, Branch, IRWrite, DMEMWrite, RegWrite,
   // ~~~~~~~~~~~~~~~~~~~ INTERNAL REGISTERS ~~~~~~~~~~~~~~~~~~~ //
 
   // PC
-  holding_reg PC(PCout, PCin, PCWrite_datapath, clk, reset);
+  holding_reg PC(PCout, PCtemp, PCWrite_datapath, clk, reset);
   assign PCoutoutside = PCout;
+  assign PCtemp = PCinoutside == 32'b0 ? PCin : PCinoutside;
+  // assign PCinoutside = PCin;
+
 
   // EPC
   // wirte is always asserted

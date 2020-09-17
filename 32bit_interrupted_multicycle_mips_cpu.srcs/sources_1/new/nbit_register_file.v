@@ -1,8 +1,5 @@
 `timescale 1ns / 1ps
 
-// This can be used to replace the original nbit_register_file in lab6.
-// In iSim you can actually expand this reg_file to view the contents in it.
-
 module nbit_register_file(write_data,
                           read_data_1, read_data_2,
                           read_sel_1, read_sel_2,
